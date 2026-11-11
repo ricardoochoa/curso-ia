@@ -1054,35 +1054,40 @@ Restricciones estrictas:
         </aside>
       </section>
 
-      <!-- Slide 22: Profundización - Prompts Avanzados e Índices Territoriales (slide20 y slide21) -->
+      <!-- Slide 22: Profundización - Prompts Avanzados e Índices Territoriales -->
       <section>
         <div style="max-width: 1150px; margin: 0 auto;">
           <span class="tag-pill purple">Profundización · Para ir más lejos</span>
           <h2>Cálculo de Índices Territoriales con IA</h2>
           <p class="subtitle-text" style="margin-bottom: 0.6em;">Combinar múltiples variables espaciales en un "Índice de Aislamiento".</p>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.1em; align-items: start; text-align: left;">
-            <!-- Imagen Recortada ej03_slide20.jpeg (2512x796) -->
-            <div>
-              <div class="card accent-orange" style="margin-bottom: 0.6em; padding: 0.6em 0.8em;">
-                <strong>1. Prompt Simple de Índice</strong>
-                <p style="font-size: 0.82em;">Pide a la IA cruzar hospitales, escuelas y transporte estilo mapa de calor.</p>
+          <div style="display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 1.1em; align-items: stretch; text-align: left;">
+            <!-- Recuadro 1: Prompt Simple -->
+            <div style="display: flex; flex-direction: column;">
+              <div class="card accent-orange" style="margin-bottom: 0.55em; padding: 0.55em 0.85em;">
+                <strong>1. Crear un índice con un prompt simple</strong>
+                <p style="font-size: 0.8em;">Pide a la IA cruzar hospitales, escuelas y transporte estilo mapa de calor.</p>
               </div>
-              <img src="img/ej03_slide20.jpeg" class="slide-img" style="width: 100%; max-height: 300px; display: block;" alt="Prompt de índice territorial">
+              <div class="prompt-snippet" style="flex: 1; font-size: 0.64em; line-height: 1.55; padding: 1.1em; border-left: 4px solid var(--aru-orange); max-height: 330px;">Imprime un mapa que muestre un índice de proximidad basado en las variables hospitales, escuelas y estaciones_bus. El índice debe mostrar, al estilo de un mapa de calor, aquellas zonas alejadas de escuelas, del transporte público y de oportunidades de empleo.</div>
             </div>
 
-            <!-- Imagen Recortada ej03_slide21.jpeg (3460x1520) -->
-            <div>
-              <div class="card accent-teal" style="margin-bottom: 0.6em; padding: 0.6em 0.8em;">
-                <strong>2. Prompt Metodológico Completo</strong>
-                <p style="font-size: 0.82em;">Normaliza variables con <code>scikit-learn (MinMaxScaler)</code> e invierte empleo.</p>
+            <!-- Recuadro 2: Prompt Más Completo -->
+            <div style="display: flex; flex-direction: column;">
+              <div class="card accent-teal" style="margin-bottom: 0.55em; padding: 0.55em 0.85em;">
+                <strong>2. Crear un índice con un prompt más completo</strong>
+                <p style="font-size: 0.8em;">Normaliza variables con <code>scikit-learn (MinMaxScaler)</code> e invierte empleo.</p>
               </div>
-              <img src="img/ej03_slide21.jpeg" class="slide-img" style="width: 100%; max-height: 300px; display: block;" alt="Prompt avanzado con normalización MinMaxScaler">
+              <div class="prompt-snippet" style="flex: 1; font-size: 0.58em; line-height: 1.45; padding: 1em 1.1em; border-left: 4px solid var(--aru-teal); max-height: 330px;">Escribe el código en Python para calcular un "Índice de Aislamiento" y visualizarlo. Sigue estrictamente estos pasos:
+
+• Normalización: Normaliza las variables escuelas, estaciones_bus y empleo usando el escalador MinMaxScaler de la librería scikit-learn, para que todas las variables estén en un rango de 0 a 1.
+• Lógica del Índice: Queremos destacar las zonas desfavorecidas (alejadas de servicios y sin empleo). Por lo tanto, un valor alto en las distancias normalizadas de escuelas y estaciones_bus suma al índice. Sin embargo, para empleo, un valor bajo debe sumar al índice (invierte esta variable restando el valor normalizado de 1).
+• Cálculo: Crea una nueva columna llamada indice_aislamiento que sea la suma (o promedio) de estas tres variables ajustadas.
+• Visualización: Genera un mapa coroplético (estilo mapa de calor) del indice_aislamiento usando matplotlib o contextily (para añadir un mapa base). Usa una paleta de colores divergente o secuencial (como 'OrRd' o 'magma') donde los colores más intensos representen las zonas más aisladas y desconectadas. Incluye un título claro y una leyenda.</div>
             </div>
           </div>
 
-          <p style="font-size: 0.72em; color: var(--mono-500); margin-top: 0.7em; text-align: center;">
-            El código completo y la fórmula de normalización están disponibles en el <strong>portal web de práctica autónoma</strong>.
+          <p style="font-size: 0.7em; color: var(--mono-500); margin-top: 0.65em; text-align: center;">
+            Ambos prompts están listos para copiarse en 1 clic desde el <strong>portal web de práctica autónoma</strong>.
           </p>
         </div>
 

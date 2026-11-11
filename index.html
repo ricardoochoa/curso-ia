@@ -1071,47 +1071,29 @@ Después de cada respuesta mía, integra mis ideas, comenta brevemente cómo for
         </div>
       </div>
 
-      <p>Una vez que domines los mapas simples de una sola variable, puedes pedirle a la IA que construya <strong>índices sintéticos de aislamiento o vulnerabilidad urbana</strong> cruzando distancias a escuelas, hospitales, paradas de autobús y empleo.</p>
+      <p>Una vez que domines los mapas simples de una sola variable, puedes pedirle a la IA que construya <strong>índices sintéticos de aislamiento o vulnerabilidad urbana</strong> cruzando distancias a escuelas, hospitales, paradas de autobús y empleo. Aquí tienes dos niveles de profundidad para solicitarlo:</p>
 
-      <div class="image-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-        <div class="image-card">
-          <img src="img/ej03_slide20.jpeg" alt="Lámina de prompt de índice sintético">
-          <div class="image-caption">
-            <strong>Estructura del cálculo del índice</strong>
-            Instrucciones para normalizar variables con escalas de 0 a 1 y combinar distancias con empleo.
-          </div>
-        </div>
-        <div class="image-card">
-          <img src="img/ej03_slide21.jpeg" alt="Lámina con prompt detallado">
-          <div class="image-caption">
-            <strong>Prompt metodológico completo</strong>
-            Uso de scikit-learn (MinMaxScaler) para estandarizar indicadores dispares.
-          </div>
-        </div>
-      </div>
-
-      <!-- Prompt Avanzado -->
+      <!-- Opción 1: Prompt Simple -->
       <div class="prompt-box">
         <div class="prompt-header">
-          <span>PROMPT AVANZADO: Cálculo y Mapeo del "Índice de Aislamiento Territorial"</span>
+          <span>OPCIÓN A: Crear un índice con un prompt simple</span>
+          <button class="copy-btn" onclick="copyPrompt('prompt-indice-simple', this)">📋 Copiar Prompt</button>
+        </div>
+        <div class="prompt-content" id="prompt-indice-simple">Imprime un mapa que muestre un índice de proximidad basado en las variables hospitales, escuelas y estaciones_bus. El índice debe mostrar, al estilo de un mapa de calor, aquellas zonas alejadas de escuelas, del transporte público y de oportunidades de empleo.</div>
+      </div>
+
+      <!-- Opción 2: Prompt Más Completo -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <span>OPCIÓN B: Crear un índice con un prompt más completo</span>
           <button class="copy-btn" onclick="copyPrompt('prompt-aislamiento', this)">📋 Copiar Prompt</button>
         </div>
-        <div class="prompt-content" id="prompt-aislamiento">Actúa como una científica de datos espaciales experta en Python. Vamos a trabajar con el archivo tijuana_mun_osm.geojson cargado en Colab.
-
-Escribe el código completo en Python para calcular un "Índice de Aislamiento Territorial" y visualizarlo en un mapa coroplético profesional. Sigue estrictamente esta metodología:
-
-1. Verificación e Instalación: Verifica si están instaladas las librerías geopandas, matplotlib, contextily y scikit-learn. Si falta alguna, incluye el comando de instalación (!pip install).
-2. Normalización de Datos: Normaliza las columnas "escuelas", "estaciones_bus" y "empleo" usando MinMaxScaler de scikit-learn para que queden en un rango común de 0 a 1.
-3. Lógica Territorial del Índice:
-   - Queremos evidenciar las zonas más desfavorecidas (lejos de servicios y con poco empleo).
-   - Para "escuelas" y "estaciones_bus": un valor alto de distancia suma al aislamiento (se mantiene directo).
-   - Para "empleo": un valor alto de unidades económicas reduce el aislamiento. Por lo tanto, invierte la variable restando su valor normalizado de 1 (1 - empleo_norm).
-4. Cálculo del Índice: Crea la columna "indice_aislamiento" calculando el promedio de estas tres variables normalizadas.
-5. Visualización Cartográfica:
-   - Genera un mapa coroplético usando la paleta "OrRd" o "magma", donde los tonos más oscuros e intensos representen mayor aislamiento territorial.
-   - Agrega un mapa base en escala de grises con contextily (CartoDB.Positron).
-   - Añade título claro, barra de escala de color con leyenda explicativa y guarda la imagen como "mapa_indice_aislamiento.png" a 300 dpi.
-6. Estadísticas de Respaldo: Imprime en texto la media, mediana y percentiles 25 y 75 del índice para documentar el reporte.</div>
+        <div class="prompt-content" id="prompt-aislamiento">Escribe el código en Python para calcular un "Índice de Aislamiento" y visualizarlo.
+Sigue estrictamente estos pasos:
+Normalización: Normaliza las variables escuelas, estaciones_bus y empleo usando el escalador MinMaxScaler de la librería scikit-learn, para que todas las variables estén en un rango de 0 a 1.
+Lógica del Índice: Queremos destacar las zonas desfavorecidas (alejadas de servicios y sin empleo). Por lo tanto, un valor alto en las distancias normalizadas de escuelas y estaciones_bus suma al índice. Sin embargo, para empleo, un valor bajo debe sumar al índice (invierte esta variable restando el valor normalizado de 1).
+Cálculo: Crea una nueva columna llamada indice_aislamiento que sea la suma (o promedio) de estas tres variables ajustadas.
+Visualización: Genera un mapa coroplético (estilo mapa de calor) del indice_aislamiento usando matplotlib o contextily (para añadir un mapa base). Usa una paleta de colores divergente o secuencial (como 'OrRd' o 'magma') donde los colores más intensos representen las zonas más aisladas y desconectadas. Incluye un título claro y una leyenda.</div>
       </div>
     </section>
 
