@@ -9,26 +9,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1e3a8a;
-      --primary-dark: #0f172a;
-      --primary-light: #3b82f6;
-      --accent: #d97706;
-      --accent-light: #fef3c7;
-      --teal: #0f766e;
-      --teal-light: #ccfbf1;
-      --slate-50: #f8fafc;
-      --slate-100: #f1f5f9;
-      --slate-200: #e2e8f0;
-      --slate-300: #cbd5e1;
-      --slate-600: #475569;
-      --slate-700: #334155;
-      --slate-800: #1e293b;
-      --slate-900: #0f172a;
-      --success: #15803d;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --radius: 12px;
+      --primary: #18181b;
+      --primary-dark: #09090b;
+      --primary-light: #3f3f46;
+      --accent: #27272a;
+      --accent-light: #f4f4f5;
+      --teal: #18181b;
+      --teal-light: #f4f4f5;
+      --slate-50: #fafafa;
+      --slate-100: #f4f4f5;
+      --slate-200: #e4e4e7;
+      --slate-300: #d4d4d8;
+      --slate-600: #52525b;
+      --slate-700: #3f3f46;
+      --slate-800: #27272a;
+      --slate-900: #09090b;
+      --success: #18181b;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+      --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+      --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+      --radius: 10px;
     }
 
     * {
@@ -45,7 +45,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Navegación Fija */
+    /* Navegación Fija Minimalista */
     header.site-header {
       background-color: #ffffff;
       border-bottom: 1px solid var(--slate-200);
@@ -74,19 +74,20 @@
     }
 
     .brand-badge {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
+      background: var(--slate-900);
+      color: #ffffff;
       font-weight: 800;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       padding: 0.35rem 0.65rem;
-      border-radius: 8px;
-      letter-spacing: 0.05em;
+      border-radius: 6px;
+      letter-spacing: 0.06em;
     }
 
     .brand-text h1 {
       font-size: 1.05rem;
       font-weight: 700;
       line-height: 1.2;
+      color: var(--slate-900);
     }
 
     .brand-text p {
@@ -96,7 +97,7 @@
 
     nav.site-nav {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.45rem;
       overflow-x: auto;
       padding-bottom: 0.2rem;
     }
@@ -104,30 +105,32 @@
     nav.site-nav a {
       text-decoration: none;
       color: var(--slate-700);
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       font-weight: 600;
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
-      transition: all 0.2s ease;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      transition: all 0.15s ease;
       white-space: nowrap;
     }
 
     nav.site-nav a:hover {
       background-color: var(--slate-100);
-      color: var(--primary);
+      color: var(--slate-900);
     }
 
     nav.site-nav a.highlight {
-      background-color: var(--accent-light);
-      color: var(--accent);
+      background-color: var(--slate-100);
+      color: var(--slate-900);
+      border: 1px solid var(--slate-300);
     }
 
-    /* Hero Banner */
+    /* Hero Banner Minimalista en Escala de Grises */
     .hero {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1e293b 100%);
-      color: white;
+      background-color: var(--slate-900);
+      color: #ffffff;
       padding: 3.5rem 1.5rem;
       text-align: center;
+      border-bottom: 1px solid #27272a;
     }
 
     .hero-content {
@@ -137,16 +140,16 @@
 
     .hero-tag {
       display: inline-block;
-      background-color: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(8px);
-      padding: 0.4rem 1rem;
+      background-color: #18181b;
+      color: #d4d4d8;
+      padding: 0.35rem 0.95rem;
       border-radius: 9999px;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       font-weight: 600;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       margin-bottom: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid #3f3f46;
     }
 
     .hero h2 {
@@ -154,12 +157,13 @@
       font-weight: 800;
       line-height: 1.2;
       margin-bottom: 1rem;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
+      color: #ffffff;
     }
 
     .hero p {
-      font-size: 1.1rem;
-      color: var(--slate-300);
+      font-size: 1.08rem;
+      color: #a1a1aa;
       max-width: 750px;
       margin: 0 auto 1.75rem;
     }
@@ -169,8 +173,8 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 1.5rem;
-      font-size: 0.9rem;
-      color: #93c5fd;
+      font-size: 0.88rem;
+      color: #d4d4d8;
     }
 
     .hero-meta span {
@@ -235,69 +239,73 @@
       margin-top: 0.25rem;
     }
 
-    /* Cajas de Información y Alertas */
+    /* Cajas de Información y Alertas (Escala de Grises Editorial) */
     .callout {
       background-color: var(--slate-100);
-      border-left: 4px solid var(--primary-light);
+      border-left: 4px solid var(--slate-700);
       padding: 1.15rem 1.35rem;
       border-radius: 0 8px 8px 0;
       margin: 1.25rem 0;
       font-size: 0.95rem;
+      color: var(--slate-800);
     }
 
     .callout.tip {
-      background-color: #ecfdf5;
-      border-left-color: #10b981;
-      color: #065f46;
+      background-color: #f4f4f5;
+      border-left-color: #18181b;
+      color: #27272a;
     }
 
     .callout.warning {
-      background-color: #fffbeb;
-      border-left-color: var(--accent);
-      color: #92400e;
+      background-color: #fafafa;
+      border: 1px solid var(--slate-200);
+      border-left: 4px solid #52525b;
+      color: #27272a;
     }
 
     .callout.info {
-      background-color: #eff6ff;
-      border-left-color: var(--primary-light);
-      color: #1e40af;
+      background-color: #f4f4f5;
+      border-left-color: #3f3f46;
+      color: #18181b;
     }
 
     .callout strong {
       display: block;
       margin-bottom: 0.25rem;
       font-weight: 700;
+      color: var(--slate-900);
     }
 
-    /* Bloques de Código y Prompts */
+    /* Bloques de Código y Prompts Minimalistas */
     .prompt-box {
       margin: 1.5rem 0;
-      background: #0f172a;
-      border-radius: 10px;
-      border: 1px solid #1e293b;
+      background: #09090b;
+      border-radius: 8px;
+      border: 1px solid #27272a;
       overflow: hidden;
       box-shadow: var(--shadow-sm);
     }
 
     .prompt-header {
-      background: #1e293b;
+      background: #18181b;
       padding: 0.65rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: #cbd5e1;
-      font-size: 0.85rem;
+      color: #d4d4d8;
+      font-size: 0.84rem;
       font-weight: 600;
+      border-bottom: 1px solid #27272a;
     }
 
     .copy-btn {
-      background: #3b82f6;
-      color: white;
-      border: none;
+      background: #ffffff;
+      color: #09090b;
+      border: 1px solid #e4e4e7;
       padding: 0.35rem 0.75rem;
       border-radius: 6px;
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -306,16 +314,18 @@
     }
 
     .copy-btn:hover {
-      background: #2563eb;
+      background: #e4e4e7;
     }
 
     .copy-btn.copied {
-      background: var(--success);
+      background: #27272a;
+      color: #ffffff;
+      border-color: #52525b;
     }
 
     .prompt-content {
       padding: 1.25rem;
-      color: #f8fafc;
+      color: #f4f4f5;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
       line-height: 1.55;
@@ -341,9 +351,9 @@
     }
 
     .step-badge {
-      background: var(--slate-100);
-      color: var(--primary);
-      border: 2px solid var(--primary-light);
+      background: var(--slate-900);
+      color: #ffffff;
+      border: none;
       font-weight: 800;
       font-size: 0.85rem;
       width: 28px;
@@ -429,32 +439,32 @@
     }
 
     .btn-primary {
-      background-color: var(--primary);
-      color: white;
+      background-color: var(--slate-900);
+      color: #ffffff;
     }
 
     .btn-primary:hover {
-      background-color: #172554;
+      background-color: #27272a;
     }
 
     .btn-accent {
-      background-color: var(--accent);
-      color: white;
+      background-color: var(--slate-900);
+      color: #ffffff;
     }
 
     .btn-accent:hover {
-      background-color: #b45309;
+      background-color: #27272a;
     }
 
     .btn-outline {
-      background-color: transparent;
+      background-color: #ffffff;
       border: 1.5px solid var(--slate-300);
-      color: var(--slate-700);
+      color: var(--slate-800);
     }
 
     .btn-outline:hover {
       background-color: var(--slate-100);
-      border-color: var(--slate-400);
+      border-color: var(--slate-600);
     }
 
     .btn-group {
@@ -1224,7 +1234,9 @@ Escribe el código completo en Python para calcular un "Índice de Aislamiento T
     <div class="footer-container">
       <p><strong>Curso: Inteligencia Artificial Generativa para el Análisis Territorial</strong></p>
       <p>Material elaborado por <strong>Ricardo Ochoa Sosa</strong> para la capacitación técnica de gobiernos municipales de Guanajuato.</p>
-      <p style="font-size: 0.8rem; color: #64748b;">Publicado mediante GitHub Pages • Repositorio: <code>curso-ia</code></p>
+      <p style="font-size: 0.82rem; color: #a1a1aa;">
+        Portal: <code>ricardoochoa.github.io/curso-ia/</code> • Repositorio en GitHub: <code>ricardoochoa/curso-ia</code>
+      </p>
     </div>
   </footer>
 
