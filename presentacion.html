@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>IA Generativa para el Análisis Territorial | Presentación</title>
+  
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css" id="theme">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================================
+       PALETA MINIMALISTA ARU (Alianza para la Regeneración Urbana)
+       Base: Blanco y Negro con Acentos ARU
+       - Morado ARU:   #910281
+       - Naranja ARU:  #e66110
+       - Turquesa ARU: #16b8ad
+       - Amarillo ARU: #fecb00
+       ======================================================== */
+    :root {
+      --aru-purple: #910281;
+      --aru-orange: #e66110;
+      --aru-teal:   #16b8ad;
+      --aru-yellow: #fecb00;
+
+      --mono-black: #000000;
+      --mono-900:   #111827;
+      --mono-800:   #1f2937;
+      --mono-700:   #374151;
+      --mono-600:   #4b5563;
+      --mono-400:   #9ca3af;
+      --mono-300:   #d1d5db;
+      --mono-200:   #e5e7eb;
+      --mono-100:   #f3f4f6;
+      --mono-50:    #f9fafb;
+      --mono-white: #ffffff;
+
+      --r-main-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --r-heading-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --r-heading-color: var(--mono-900);
+      --r-main-color: var(--mono-700);
+    }
+
+    .reveal {
+      font-family: var(--r-main-font);
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--r-main-color);
+      background-color: var(--mono-white);
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--r-heading-font);
+      font-weight: 800;
+      color: var(--r-heading-color);
+      letter-spacing: -0.025em;
+      text-transform: none;
+      line-height: 1.18;
+    }
+
+    .reveal h1 {
+      font-size: 2.2em;
+    }
+
+    .reveal h2 {
+      font-size: 1.8em;
+      margin-bottom: 0.35em;
+    }
+
+    .reveal h3 {
+      font-size: 1.3em;
+    }
+
+    /* Píldoras / Etiquetas Minimalistas */
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      font-size: 0.58em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--mono-900);
+      color: var(--mono-white);
+      padding: 0.35em 0.85em;
+      border-radius: 9999px;
+      margin-bottom: 0.8em;
+    }
+
+    .tag-pill.purple {
+      background: var(--aru-purple);
+      color: var(--mono-white);
+    }
+
+    .tag-pill.orange {
+      background: var(--aru-orange);
+      color: var(--mono-white);
+    }
+
+    .tag-pill.teal {
+      background: var(--aru-teal);
+      color: var(--mono-white);
+    }
+
+    .tag-pill.yellow {
+      background: var(--aru-yellow);
+      color: var(--mono-900);
+    }
+
+    .tag-pill.outline {
+      background: transparent;
+      border: 1px solid var(--mono-300);
+      color: var(--mono-700);
+    }
+
+    .subtitle-text {
+      font-size: 0.88em;
+      color: var(--mono-600);
+      margin-bottom: 1.1em;
+      font-weight: 500;
+    }
+
+    /* Imagotipo Cuadrantes ARU */
+    .aru-logo-mark {
+      display: inline-grid;
+      grid-template-columns: 14px 14px;
+      gap: 3px;
+      vertical-align: middle;
+      margin-right: 0.4em;
+    }
+
+    .aru-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
+    }
+    .aru-dot.p { background-color: var(--aru-purple); }
+    .aru-dot.o { background-color: var(--aru-orange); }
+    .aru-dot.t { background-color: var(--aru-teal); }
+    .aru-dot.y { background-color: var(--aru-yellow); }
+
+    /* Tarjetas y Contenedores Minimalistas */
+    .content-box {
+      background: var(--mono-white);
+      border-radius: 12px;
+      padding: 1.1em 1.4em;
+      border: 1px solid var(--mono-200);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      text-align: left;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2em;
+      align-items: center;
+      text-align: left;
+    }
+
+    .two-cols-unequal {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 1.2em;
+      align-items: center;
+      text-align: left;
+    }
+
+    .three-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1em;
+      text-align: left;
+    }
+
+    .card {
+      background: var(--mono-white);
+      border: 1px solid var(--mono-200);
+      border-radius: 10px;
+      padding: 1.05em;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      font-size: 0.82em;
+      transition: border-color 0.2s ease;
+    }
+
+    .card h4 {
+      font-size: 1.05em;
+      margin-bottom: 0.4em;
+      color: var(--mono-900);
+    }
+
+    .card p {
+      color: var(--mono-600);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Bordes de Acento ARU */
+    .card.accent-purple {
+      border-top: 4px solid var(--aru-purple);
+    }
+
+    .card.accent-orange {
+      border-top: 4px solid var(--aru-orange);
+    }
+
+    .card.accent-teal {
+      border-top: 4px solid var(--aru-teal);
+    }
+
+    .card.accent-yellow {
+      border-top: 4px solid var(--aru-yellow);
+    }
+
+    .card.accent-black {
+      border-top: 4px solid var(--mono-900);
+    }
+
+    /* Diapositivas de Sondeo / Interacción (Fondo Oscuro Minimalista) */
+    .interaction-slide {
+      background: var(--mono-900) !important;
+      color: var(--mono-white) !important;
+      border-radius: 16px;
+      padding: 2.2em !important;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    }
+
+    .interaction-slide h2 {
+      color: var(--mono-white) !important;
+      font-size: 1.75em;
+    }
+
+    .interaction-slide h3 {
+      color: var(--aru-yellow) !important;
+    }
+
+    .interaction-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--aru-teal);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.3em 0.85em;
+      border-radius: 9999px;
+      font-size: 0.55em;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.9em;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85em;
+      margin-top: 1.2em;
+    }
+
+    .option-item {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 0.75em 0.95em;
+      border-radius: 8px;
+      font-size: 0.8em;
+      font-weight: 600;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      color: var(--mono-100);
+    }
+
+    .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78em;
+      font-weight: 800;
+      flex-shrink: 0;
+      color: var(--mono-white);
+    }
+
+    .option-letter.purple { background-color: var(--aru-purple); }
+    .option-letter.orange { background-color: var(--aru-orange); }
+    .option-letter.teal   { background-color: var(--aru-teal); }
+    .option-letter.yellow { background-color: var(--aru-yellow); color: var(--mono-900); }
+    .option-letter.black  { background-color: var(--mono-white); color: var(--mono-900); }
+
+    /* Cajas de Código y Prompts Minimalistas */
+    .prompt-snippet {
+      background: var(--mono-900);
+      color: #f3f4f6;
+      padding: 1em 1.2em;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62em;
+      text-align: left;
+      line-height: 1.48;
+      border: 1px solid #27272a;
+      max-height: 400px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* Listas */
+    .reveal ul {
+      margin-left: 1.2em;
+      font-size: 0.88em;
+      line-height: 1.5;
+      color: var(--mono-700);
+    }
+
+    .reveal ul li {
+      margin-bottom: 0.45em;
+    }
+
+    .reveal strong {
+      color: var(--mono-900);
+      font-weight: 700;
+    }
+
+    /* Imágenes */
+    .slide-img {
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      max-height: 460px;
+      width: auto;
+      object-fit: contain;
+      border: 1px solid var(--mono-200);
+      background: var(--mono-white);
+    }
+
+    .img-caption {
+      font-size: 0.55em;
+      color: var(--mono-600);
+      margin-top: 0.5em;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Tablas Compactas PRESUME */
+    .presume-mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.64em;
+      text-align: left;
+    }
+
+    .presume-mini-table th {
+      background: var(--mono-900);
+      color: var(--mono-white);
+      padding: 0.55em 0.85em;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .presume-mini-table td {
+      background: var(--mono-white);
+      padding: 0.55em 0.85em;
+      border-bottom: 1px solid var(--mono-200);
+      color: var(--mono-700);
+    }
+
+    .presume-mini-table tr:hover td {
+      background: var(--mono-50);
+    }
+
+    .badge-presume {
+      display: inline-block;
+      font-weight: 800;
+      padding: 0.15em 0.45em;
+      border-radius: 4px;
+      margin-right: 0.35em;
+      color: white;
+    }
+    .badge-presume.purple { background-color: var(--aru-purple); }
+    .badge-presume.orange { background-color: var(--aru-orange); }
+    .badge-presume.teal   { background-color: var(--aru-teal); }
+    .badge-presume.yellow { background-color: var(--aru-yellow); color: var(--mono-900); }
+
+    /* Barra Inferior Fija Minimalista */
+    .footer-bar {
+      position: absolute;
+      bottom: 16px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--mono-400);
+      z-index: 10;
+      pointer-events: none;
+      border-top: 1px solid var(--mono-200);
+      padding-top: 8px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: var(--mono-700);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Portada (Minimalista con Acentos ARU) -->
+      <section data-background-color="#0f172a" style="color: white; text-align: left;">
+        <div style="max-width: 950px; margin: 0 auto; padding-top: 1.5em;">
+          <div style="display: flex; align-items: center; gap: 0.6em; margin-bottom: 1.5em;">
+            <div class="aru-logo-mark">
+              <span class="aru-dot t"></span>
+              <span class="aru-dot o"></span>
+              <span class="aru-dot p"></span>
+              <span class="aru-dot y"></span>
+            </div>
+            <span class="tag-pill outline" style="color: #cbd5e1; border-color: #334155; margin: 0;">Capacitación Técnica Municipal · 60 min</span>
+          </div>
+
+          <h1 style="color: white; font-size: 2.3em; margin-bottom: 0.25em;">Inteligencia Artificial Generativa</h1>
+          <h2 style="color: var(--aru-teal); font-size: 1.35em; font-weight: 600; margin-bottom: 1.2em;">para el Análisis Territorial</h2>
+          
+          <p style="font-size: 0.88em; color: #94a3b8; max-width: 780px; margin-bottom: 2em; line-height: 1.5;">
+            De ejecutores manuales a arquitectos y estrategas del territorio: tres soluciones prácticas para los municipios de Guanajuato.
+          </p>
+
+          <div style="font-size: 0.75em; color: #cbd5e1; border-top: 1px solid #334155; padding-top: 1.2em; display: flex; justify-content: space-between;">
+            <span><strong>Facilitador:</strong> Ricardo Ochoa Sosa</span>
+            <span>Gobiernos Municipales de Guanajuato</span>
+            <span style="color: var(--aru-yellow);">www.arumx.org</span>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Bienvenida cálida y horizontal. Validar su experiencia previa:
+          "Ustedes son los expertos en el territorio de Guanajuato. Hoy venimos a ver cómo la IA nos ahorra horas mecánicas para enfocarnos en lo estratégico."
+        </aside>
+      </section>
+
+      <!-- Slide 2: Propósito de la Sesión -->
+      <section>
+        <span class="tag-pill teal">Nuestro Propósito Hoy</span>
+        <h2>De Ejecutores Manuales a Estrategas del Territorio</h2>
+        <p class="subtitle-text">¿Cómo dejamos de perder horas en procesos mecánicos para concentrarnos en resolver problemas reales?</p>
+
+        <div class="three-cols" style="margin-top: 1.2em;">
+          <div class="card accent-black">
+            <h4>El Reto Diario</h4>
+            <p>Horas atrapados redibujando planos, limpiando tablas de Excel y redactando fichas técnicas burocráticas bajo presión.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>La Oportunidad</h4>
+            <p>La IA Generativa actúa como un copiloto técnico: redacta borradores, formula proyectos y ejecuta mapas en minutos.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4>Tres Soluciones</h4>
+            <p>1. Renders urbanos antes/después.<br>2. Asesor de proyectos PRESUME.<br>3. Mapeo en Colab sin programar.</p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Storytelling: empatizar con el agotamiento administrativo cotidiano en las direcciones de obras públicas y desarrollo urbano.
+        </aside>
+      </section>
+
+      <!-- Slide 3: Pregunta en Plenaria (Herramientas) -->
+      <section class="interaction-slide">
+        <span class="interaction-badge">Pregunta Detonadora • Sondeo en Plenaria</span>
+        <h2>¿Qué herramientas utilizas en tu trabajo diario?</h2>
+        <p style="font-size: 0.85em; color: #94a3b8;">Levantemos la mano: ¿cuáles de estas forman parte de tu jornada?</p>
+
+        <div class="options-grid">
+          <div class="option-item"><span class="option-letter teal">A</span> Word, Excel, PowerPoint o Google Docs/Sheets</div>
+          <div class="option-item"><span class="option-letter orange">B</span> QGIS, ArcGIS o Google Earth</div>
+          <div class="option-item"><span class="option-letter purple">C</span> AutoCAD o software de dibujo técnico</div>
+          <div class="option-item"><span class="option-letter yellow">D</span> ChatGPT, Gemini, Claude u otra IA</div>
+          <div class="option-item" style="grid-column: span 2;"><span class="option-letter black">E</span> Python, R o Google Colab (programación)</div>
+        </div>
+
+        <aside class="notes">
+          Pedir manos alzadas. Lo común es que la mayoría esté en A, B y C. 
+          Mensaje de tranquilidad: "No necesitan aprender a programar para aplicar IA en su municipio".
+        </aside>
+      </section>
+
+      <!-- Slide 4: Reflexión de Retos Territoriales -->
+      <section class="interaction-slide">
+        <span class="interaction-badge" style="color: var(--aru-orange);">Diagnóstico Territorial</span>
+        <h2>En 1 o 2 palabras:</h2>
+        <h3 style="color: var(--aru-yellow) !important; font-size: 1.35em;">¿Cuál es el principal reto territorial o urbano de tu municipio?</h3>
+        
+        <div class="content-box" style="margin-top: 1.2em; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: white;">
+          <p style="font-size: 0.9em; text-align: center; line-height: 1.8; color: #e2e8f0;">
+            <em>Falta de banquetas y áreas verdes • Inundaciones recurrentes • Crecimiento desordenado de periferias • Falta de transporte público • Dificultad para justificar presupuestos ante el Cabildo • Proyectos rechazados</em>
+          </p>
+        </div>
+
+        <p style="font-size: 0.78em; margin-top: 1.2em; color: #94a3b8; text-align: center;">
+          Los tres ejemplos de hoy están diseñados directamente para atender estos desafíos.
+        </p>
+
+        <aside class="notes">
+          Pedir 2 o 3 intervenciones breves de viva voz sobre problemas de su municipio (León, Irapuato, Celaya, Guanajuato, etc.).
+        </aside>
+      </section>
+
+      <!-- Slide 5: Ventajas y Cuidados -->
+      <section>
+        <span class="tag-pill">Marco de Referencia</span>
+        <h2>Inteligencia Artificial en el Municipio</h2>
+        <p class="subtitle-text">Una herramienta para agilizar el trabajo diario, no para reemplazarnos.</p>
+
+        <div class="two-cols">
+          <div class="content-box" style="border-left: 4px solid var(--aru-teal);">
+            <h4 style="color: var(--aru-teal); margin-bottom: 0.5em;">Lo que Ganamos (Ventajas)</h4>
+            <ul>
+              <li><strong>Ahorro sustancial de tiempo:</strong> Procesar datos, limpiar tablas y redactar reportes en segundos.</li>
+              <li><strong>Visualización clara:</strong> Renders y mapas atractivos para dialogar con vecinos y Cabildo.</li>
+              <li><strong>Más estrategia, menos rutina:</strong> Tiempo recuperado para evaluar proyectos en campo.</li>
+            </ul>
+          </div>
+
+          <div class="content-box" style="border-left: 4px solid var(--aru-orange);">
+            <h4 style="color: var(--aru-orange); margin-bottom: 0.5em;">Lo que Debemos Vigilar (Riesgos)</h4>
+            <ul>
+              <li><strong>Alucinaciones:</strong> Si le pedimos datos sin contexto, la IA puede inventar leyes o nombres de calles.</li>
+              <li><strong>Regla de oro:</strong> Alimentar la herramienta solo con documentos oficiales y datos del INEGI.</li>
+              <li><strong>Privacidad ciudadana:</strong> Jamás subir datos personales de vecinos ni expedientes en litigio.</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Dejar muy claro el principio ético: no subir nombres ni datos sensibles.
+        </aside>
+      </section>
+
+      <!-- Slide 6: Ejemplo 1 - Introducción -->
+      <section>
+        <span class="tag-pill purple">Ejemplo 01</span>
+        <h2>Visualización Urbana y "Calle Completa"</h2>
+        <p class="subtitle-text">De una fotografía de calle deteriorada a un render fotorrealista de diseño sustentable.</p>
+
+        <div class="two-cols-unequal">
+          <div>
+            <ul>
+              <li><strong>El problema de comunicación:</strong> Explicar un proyecto vial con planos o textos largos no convence a comités vecinales ni al Cabildo.</li>
+              <li><strong>El obstáculo técnico:</strong> Los renders 3D convencionales tardan semanas y cuestan miles de pesos.</li>
+              <li><strong>La solución con IA multimodal:</strong> Con una foto real (incluso de Street View) y 2 instrucciones estructuradas, generamos una comparativa fotorrealista.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/original.png" class="slide-img" style="max-height: 320px;" alt="Vialidad Camino a San Cayetano de Luna">
+            <p class="img-caption">Foto original: Calle sin banquetas y ciclistas desprotegidos</p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          10 a 22 minutos de la clase. Destacar que la foto fue tomada de una situación urbana real mexicana.
+        </aside>
+      </section>
+
+      <!-- Slide 7: Paso 1 - Diagnóstico Técnico -->
+      <section>
+        <span class="tag-pill teal">Paso 1 · Ejemplo 01</span>
+        <h2>Diagnóstico Técnico Guiado</h2>
+        <p class="subtitle-text">Separar el análisis del dibujo evita que la IA invente las fachadas o borre el entorno.</p>
+
+        <div class="two-cols-unequal">
+          <div>
+            <div class="prompt-snippet">Actúa como especialista sénior en diseño urbano sostenible, movilidad activa e infraestructura verde. Analiza detalladamente la fotografía adjunta de esta vialidad y propón una intervención integral de rediseño basada en los principios de "Calle Completa"...
+
+Organiza tu propuesta en estas 4 categorías:
+1. Reasignación del espacio vial y movilidad sostenible
+2. Infraestructura verde y adaptación climática
+3. Accesibilidad universal y equipamiento
+4. Elementos invariantes (Anclas visuales)
+
+IMPORTANTE: NO generes ninguna imagen todavía. Limítate a entregar este diagnóstico estructurado y pregúntame qué deseo ajustar...</div>
+          </div>
+          <div class="content-box">
+            <h4 style="color: var(--aru-purple);">¿Por qué funciona este método?</h4>
+            <p style="font-size: 0.85em; color: var(--mono-600); margin-top: 0.4em;">
+              Al obligar a la IA a enumerar los <strong>elementos invariantes</strong> (postes, casas, comercio barrial, personas), "fijamos su memoria" para que no deforme la calle en el render.
+            </p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Explicar el concepto de "Separación de cargas cognitivas": primero pensar y diagnosticar, luego ilustrar.
+        </aside>
+      </section>
+
+      <!-- Slide 8: Etapa Intermedia - Human-in-the-Loop -->
+      <section>
+        <span class="tag-pill orange">Etapa Crucial</span>
+        <h2>El Humano al Mando (Human-in-the-Loop)</h2>
+        <p class="subtitle-text">La IA propone un urbanismo genérico; el técnico municipal aplica el criterio local.</p>
+
+        <div class="content-box" style="margin-bottom: 1em;">
+          <h4 style="color: var(--mono-900);">Preguntas que solo el funcionario municipal puede responder:</h4>
+          <div class="three-cols" style="margin-top: 0.8em;">
+            <div class="card accent-teal">
+              <strong>¿Da el ancho de vía?</strong>
+              <p>Si la calle mide 6 metros, no cabe una ciclovía confinada; es mejor priorizar banquetas amplias.</p>
+            </div>
+            <div class="card accent-orange">
+              <strong>¿Vegetación nativa?</strong>
+              <p>Rechazar pinos o césped europeo; exigir mezquites, huizaches o encinos de bajo consumo de agua.</p>
+            </div>
+            <div class="card accent-purple">
+              <strong>¿Respeto a cocheras?</strong>
+              <p>Cuidar los accesos de los comercios y casas de los vecinos para evitar conflictos sociales.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-box" style="background: var(--mono-50); border: 1px dashed var(--mono-300);">
+          <p style="font-size: 0.85em; margin: 0; color: var(--mono-800);">
+            <strong>Ajuste en una sola línea antes de renderizar:</strong><br>
+            <code style="color: var(--aru-orange); font-weight: 600;">[Ajuste: La ciclovía debe ser un carril pintado de verde; prioriza banquetas con rampas y árboles de sombra nativos]</code>
+          </p>
+        </div>
+
+        <aside class="notes">
+          Resaltar que aquí está el verdadero valor del servidor público: la máquina no sustituye su criterio.
+        </aside>
+      </section>
+
+      <!-- Slide 9: Paso 2 - Render Fotorrealista -->
+      <section>
+        <span class="tag-pill purple">Paso 2 · Ejemplo 01</span>
+        <h2>Render Fotorrealista Comparativo</h2>
+        <p class="subtitle-text">Intervención rigurosa en el derecho de vía respetando la identidad del sitio.</p>
+
+        <div class="two-cols-unequal">
+          <div>
+            <div class="prompt-snippet">Excelente diagnóstico. Ahora actúa como especialista en visualización arquitectónica fotorrealista... Genera una nueva versión aplicando las mejoras de calle completa con estos ajustes de mi parte: [Ajustes...]
+
+Restricciones estrictas:
+1. Geometría y encuadre idénticos (misma cámara y horizonte)
+2. Conservación estricta de fachadas y personas existentes
+3. Modificación exclusiva dentro del derecho de vía pública
+4. Estética de fotografía documental real, no ilustración 3D</div>
+          </div>
+          <div>
+            <img src="img/render.jpeg" class="slide-img" style="max-height: 320px;" alt="Render de Calle Completa">
+            <p class="img-caption">Resultado: Banquetas accesibles, ciclovía y vegetación con las mismas casas</p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Mostrar cómo la persona en bicicleta y la señora caminando siguen en la misma posición, pero en una calle digna.
+        </aside>
+      </section>
+
+      <!-- Slide 10: Comparativa Técnica -->
+      <section>
+        <span class="tag-pill teal">Comparativa Técnica</span>
+        <h2>El Impacto de una Imagen Creíble</h2>
+        <p class="subtitle-text">Facilitar acuerdos con la comunidad y justificar la obra ante el Cabildo.</p>
+
+        <div>
+          <img src="img/montaje.png" class="slide-img" style="max-height: 420px; width: 90%;" alt="Montaje comparativo Antes y Después">
+        </div>
+
+        <aside class="notes">
+          Preguntar a la sala: "¿Creen que un comité de colonos aprobaría más fácil esta obra viendo este montaje que leyendo un dictamen de 10 páginas?"
+        </aside>
+      </section>
+
+      <!-- Slide 11: Ejemplo 2 - Introducción -->
+      <section>
+        <span class="tag-pill orange">Ejemplo 02</span>
+        <h2>Asesor Interactivo de Proyectos PRESUME</h2>
+        <p class="subtitle-text">Formular proyectos municipales con valor social y sostenibilidad territorial.</p>
+
+        <div class="three-cols">
+          <div class="card accent-black">
+            <h4>El Error Común</h4>
+            <p>Proyectos redactados como compras de insumos: <em>"Pavimentar 500 metros"</em> o <em>"Comprar 20 postes"</em> sin justificación social.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>La Consecuencia</h4>
+            <p>Carpetas rechazadas en validación estatal/federal o proyectos que se inundan al año siguiente por falta de visión integral.</p>
+          </div>
+          <div class="card accent-teal">
+            <h4>La Solución</h4>
+            <p>Un asesor socrático de IA que te acompaña paso a paso bajo la metodología <strong>PRESUME</strong> y la Cadena de Valor Público.</p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          22 a 35 minutos de la sesión. Conectar con el dolor de los funcionarios cuando Hacienda o Desarrollo Social les rechaza fichas.
+        </aside>
+      </section>
+
+      <!-- Slide 12: Las 7 Dimensiones PRESUME -->
+      <section>
+        <span class="tag-pill">Metodología PRESUME</span>
+        <h2>Las 7 Dimensiones del Territorio</h2>
+        <p class="subtitle-text">Un marco integral para no solucionar un problema creando otro.</p>
+
+        <table class="presume-mini-table">
+          <thead>
+            <tr>
+              <th style="width: 14%;">Letra</th>
+              <th style="width: 46%;">Qué evalúa en el municipio</th>
+              <th style="width: 40%;">Pregunta clave</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge-presume purple">P</span> <strong>Patrimonio</strong></td>
+              <td>Identidad, arquitectura tradicional e imagen urbana.</td>
+              <td>¿Respeta la historia y el carácter del barrio?</td>
+            </tr>
+            <tr>
+              <td><span class="badge-presume orange">R</span> <strong>Riesgos</strong></td>
+              <td>Inundaciones, fallas, deslaves y atlas municipal.</td>
+              <td>¿Previene riesgos o construye en zona vulnerable?</td>
+            </tr>
+            <tr>
+              <td><span class="badge-presume teal">E</span> <strong>Ecosistema</strong></td>
+              <td>Arbolado nativo, confort térmico e infiltración pluvial.</td>
+              <td>¿Reduce las islas de calor y ahorra agua?</td>
+            </tr>
+            <tr>
+              <td><span class="badge-presume yellow">S</span> <strong>Servicios</strong></td>
+              <td>Brechas de agua, drenaje, luz y parques vivos.</td>
+              <td>¿Cierra rezagos básicos y genera convivencia?</td>
+            </tr>
+            <tr>
+              <td><span class="badge-presume purple">U</span> <strong>Uso Suelo</strong></td>
+              <td>Aprovechar baldíos intraurbanos y frenar dispersión.</td>
+              <td>¿Consolida la ciudad o encarece servicios?</td>
+            </tr>
+            <tr>
+              <td><span class="badge-presume teal">M</span> <strong>Movilidad</strong></td>
+              <td>Peatones, personas mayores y transporte público.</td>
+              <td>¿Conecta equipamientos a 15 min caminando?</td>
+            </tr>
+            <tr>
+              <td><span class="badge-presume orange">E</span> <strong>Economía</strong></td>
+              <td>Comercio local y presupuesto de mantenimiento anual.</td>
+              <td>¿Cómo se operará y mantendrá año con año?</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <aside class="notes">
+          Recalcar que no se trata de que todos los proyectos saquen 10 en las 7 letras, sino de evitar "proyectos navideños" inviables.
+        </aside>
+      </section>
+
+      <!-- Slide 13: Flujo Socrático -->
+      <section>
+        <span class="tag-pill teal">Metodología de Interacción</span>
+        <h2>Diálogo en 4 Fases con la IA</h2>
+        <p class="subtitle-text">La IA pregunta poco a poco (máximo 2 preguntas por turno) para no abrumar.</p>
+
+        <div class="two-cols">
+          <div class="content-box">
+            <h4 style="color: var(--mono-900);">Secuencia de Trabajo:</h4>
+            <ol style="font-size: 0.85em; line-height: 1.6; margin-top: 0.5em;">
+              <li><strong>Fase 1: Recepción del proyecto:</strong> Le platicas tu idea en borrador o adjuntas una ficha previa.</li>
+              <li><strong>Fase 2: Semáforo reflexivo:</strong> La IA evalúa las 7 dimensiones (Fortaleza, Oportunidad, Alerta, Neutral).</li>
+              <li><strong>Fase 3: Diálogo guiado:</strong> Te hace 1 o 2 preguntas concretas para reforzar los puntos débiles.</li>
+              <li><strong>Fase 4: Descripción ejecutiva:</strong> Redacta la ficha formal lista para ingresar a cartera de inversión.</li>
+            </ol>
+          </div>
+
+          <div class="content-box" style="background: var(--mono-50);">
+            <h4 style="color: var(--aru-orange);">Regla Antifrágil:</h4>
+            <p style="font-size: 0.82em; color: var(--mono-700); margin-top: 0.4em;">
+              Si el usuario presiona Enter sin escribir su proyecto, la IA no se rompe: le responde amablemente pidiéndole que le platique su idea básica.
+            </p>
+            <p style="font-size: 0.82em; color: var(--mono-700); margin-top: 0.5em;">
+              <strong>Plantilla completa disponible en el portal web de la clase.</strong>
+            </p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Destacar que este flujo fue diseñado para funcionarios que no tienen tiempo de escribir prompts complejos cada vez.
+        </aside>
+      </section>
+
+      <!-- Slide 14: Comparativa de Ficha -->
+      <section>
+        <span class="tag-pill">Cadena de Valor Público</span>
+        <h2>De la Solicitud Fría a la Ficha de Inversión</h2>
+        <p class="subtitle-text">Cómo cambia la justificación de una misma obra de pavimentación.</p>
+
+        <div class="two-cols">
+          <div class="content-box" style="border-top: 4px solid var(--mono-400);">
+            <h4 style="color: var(--mono-800);">Redacción Tradicional en Ventanilla</h4>
+            <p style="font-size: 0.85em; font-style: italic; color: var(--mono-600); margin-top: 0.5em;">
+              "Pavimentación de 400 metros de calle con concreto hidráulico de 15 cm de espesor en la Col. Santa Fe."
+            </p>
+            <p style="font-size: 0.75em; color: var(--mono-500); margin-top: 0.8em; line-height: 1.5;">
+              ❌ Solo describe la compra de material.<br>
+              ❌ No demuestra beneficio social.<br>
+              ❌ No prevé escurrimientos ni arbolado.
+            </p>
+          </div>
+
+          <div class="content-box" style="border-top: 4px solid var(--aru-teal);">
+            <h4 style="color: var(--aru-teal);">Con Asesoría PRESUME e IA</h4>
+            <p style="font-size: 0.8em; line-height: 1.45; color: var(--mono-800); margin-top: 0.4em;">
+              <strong>Problemática:</strong> 120 familias y 300 estudiantes sufren encharcamientos, caídas de adultos mayores y falta de patrullaje por fango.<br>
+              <strong>Producto:</strong> Calle completa con banquetas accesibles, luminarias solares y 45 árboles de sombra nativos.<br>
+              <strong>Impacto:</strong> Reducción del 60% en tiempos de traslado a la escuela y cero inundaciones pluviales.
+            </p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Preguntar: "¿Cuál de estos dos proyectos creen que aprueba con mayor puntaje la comisión de hacienda?"
+        </aside>
+      </section>
+
+      <!-- Slide 15: Pregunta en Plenaria (Dimensión descuidada) -->
+      <section class="interaction-slide">
+        <span class="interaction-badge" style="color: var(--aru-yellow);">Pregunta Detonadora • Plenaria</span>
+        <h2>En los proyectos que llegan a tu municipio:</h2>
+        <h3 style="color: var(--aru-yellow) !important;">¿Cuál de las dimensiones territoriales suele ser la más descuidada?</h3>
+
+        <div class="options-grid">
+          <div class="option-item"><span class="option-letter orange">R</span> Riesgos (inundaciones, fallas geológicas)</div>
+          <div class="option-item"><span class="option-letter teal">E</span> Ecosistema (arbolado nativo, sombra, agua)</div>
+          <div class="option-item"><span class="option-letter purple">M</span> Movilidad (banquetas con rampas, personas mayores)</div>
+          <div class="option-item"><span class="option-letter yellow">E</span> Economía (presupuesto para mantenimiento anual)</div>
+        </div>
+
+        <aside class="notes">
+          Comentar la dimensión más votada. En México suele ser el mantenimiento futuro (Economía) y los árboles (Ecosistema).
+        </aside>
+      </section>
+
+      <!-- Slide 16: Ejemplo 3 - Introducción (Layout Panorámico Optimizado) -->
+      <section>
+        <div style="max-width: 1120px; margin: 0 auto;">
+          <span class="tag-pill teal">Ejemplo 03</span>
+          <h2>Mapas y Métricas sin Saber Programar</h2>
+          <p class="subtitle-text" style="margin-bottom: 0.6em;">Análisis geoespacial en la nube con Google Colab y Gemini (Low-Code / No-Code).</p>
+
+          <div class="three-cols" style="margin-bottom: 0.7em; font-size: 0.78em;">
+            <div class="card accent-black" style="padding: 0.6em 0.8em;">
+              <strong>QGIS / ArcGIS</strong>
+              <p>Fácil inicio, pero repetir clics manuales ante cada cambio de datos.</p>
+            </div>
+            <div class="card accent-orange" style="padding: 0.6em 0.8em;">
+              <strong>Python / R</strong>
+              <p>Replicable y ágil, pero con una curva de aprendizaje extensa.</p>
+            </div>
+            <div class="card accent-teal" style="padding: 0.6em 0.8em;">
+              <strong>Colab + Gemini (IA)</strong>
+              <p>El código lo escribe la IA con instrucciones en español cotidiano.</p>
+            </div>
+          </div>
+
+          <!-- Imagen Recortada ej03_slide02.jpeg (2940x1208) -->
+          <div style="text-align: center;">
+            <img src="img/ej03_slide02.jpeg" class="slide-img" style="width: 92%; max-height: 400px; margin: 0 auto; display: block;" alt="Dilema superado: Curva de aprendizaje vs Replicabilidad">
+          </div>
+        </div>
+
+        <aside class="notes">
+          35 a 47 minutos de la sesión. Resaltar que esto democratiza el análisis espacial para cualquier oficina municipal sin importar su equipamiento.
+        </aside>
+      </section>
+
+      <!-- Slide 17: Metodología de 5 Etapas (Banda Panorámica Optimizada) -->
+      <section>
+        <div style="max-width: 1150px; margin: 0 auto;">
+          <span class="tag-pill">Flujo de Trabajo</span>
+          <h2>La Metodología de 5 Etapas</h2>
+          <p class="subtitle-text" style="margin-bottom: 0.5em;">Un proceso ordenado, transparente y auditable para tu municipio.</p>
+
+          <!-- Imagen Panorámica Recortada ej03_slide10.jpeg (3668x920) -->
+          <div style="text-align: center; margin-bottom: 0.7em;">
+            <img src="img/ej03_slide10.jpeg" class="slide-img" style="width: 98%; max-height: 260px; margin: 0 auto; display: block;" alt="Diagrama de las 5 Etapas de trabajo">
+          </div>
+
+          <!-- Micro-tarjetas que aprovechan el espacio vertical inferior -->
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6em; text-align: left; font-size: 0.72em;">
+            <div class="card accent-teal" style="padding: 0.6em 0.8em;">
+              <strong style="color: var(--aru-teal);">01 Preparación</strong>
+              <p>Entrar a colab.google.com con Gmail (cero instalaciones).</p>
+            </div>
+            <div class="card accent-orange" style="padding: 0.6em 0.8em;">
+              <strong style="color: var(--aru-orange);">02 Datos</strong>
+              <p>Arrastrar y soltar la capa GeoJSON a la carpeta.</p>
+            </div>
+            <div class="card accent-purple" style="padding: 0.6em 0.8em;">
+              <strong style="color: var(--aru-purple);">03 Prompts</strong>
+              <p>Pedir el mapa o cálculo en español formal.</p>
+            </div>
+            <div class="card accent-yellow" style="padding: 0.6em 0.8em;">
+              <strong style="color: var(--mono-900);">04 Iteración</strong>
+              <p>Refinar colores, leyendas y mapa base platicando.</p>
+            </div>
+            <div class="card accent-black" style="padding: 0.6em 0.8em;">
+              <strong>05 Análisis</strong>
+              <p>Evidencia territorial y cifras duras para Cabildo.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Recorrer rápido: 1. Preparación, 2. Datos, 3. Prompts, 4. Iteración, 5. Análisis e interpretación.
+        </aside>
+      </section>
+
+      <!-- Slide 18: Paso 1 y 2 en Colab (Captura Panorámica Nítida) -->
+      <section>
+        <div style="max-width: 1150px; margin: 0 auto;">
+          <span class="tag-pill purple">Paso 1 y 2 · Ejemplo 03</span>
+          <h2>Preparación del Entorno y Carga de Datos</h2>
+
+          <!-- Barra de Pasos Sintética -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6em; text-align: left; font-size: 0.75em; margin: 0.4em 0 0.7em;">
+            <div class="card" style="padding: 0.5em 0.7em; background: var(--mono-50);">
+              <strong>1. Abrir Colab</strong>
+              <p>colab.google.com con cuenta Gmail</p>
+            </div>
+            <div class="card" style="padding: 0.5em 0.7em; background: var(--mono-50);">
+              <strong>2. Nuevo Cuaderno</strong>
+              <p>Crear espacio de trabajo limpio</p>
+            </div>
+            <div class="card" style="padding: 0.5em 0.7em; background: var(--mono-50);">
+              <strong>3. Panel de Archivos</strong>
+              <p>Clic en el ícono de carpeta a la izquierda</p>
+            </div>
+            <div class="card" style="padding: 0.5em 0.7em; background: var(--mono-50); border-left: 3px solid var(--aru-teal);">
+              <strong>4. Arrastrar GeoJSON</strong>
+              <p>Soltar tijuana_mun_osm.geojson</p>
+            </div>
+          </div>
+
+          <!-- Captura Panorámica Recortada ej03_slide14.jpeg (3512x1144) -->
+          <div style="text-align: center;">
+            <img src="img/ej03_slide14.jpeg" class="slide-img" style="width: 98%; max-height: 400px; margin: 0 auto; display: block;" alt="Interfaz de Google Colab con archivo GeoJSON cargado">
+          </div>
+        </div>
+
+        <aside class="notes">
+          Aclarar que hoy usamos Tijuana porque viene precargado con hexágonos y distancias, pero la técnica aplica igual a León, Celaya, etc.
+        </aside>
+      </section>
+
+      <!-- Slide 19: Paso 3 - El Primer Prompt (Captura Panorámica Código + Mapa) -->
+      <section>
+        <div style="max-width: 1150px; margin: 0 auto;">
+          <span class="tag-pill teal">Paso 3 · Ejemplo 03</span>
+          <h2>Tu Primer Prompt de Mapeo</h2>
+
+          <!-- Prompt en barra destacada superior -->
+          <div style="background: var(--mono-900); color: #f3f4f6; border-radius: 8px; padding: 0.65em 1.2em; font-family: 'JetBrains Mono', monospace; font-size: 0.72em; text-align: left; margin: 0.3em 0 0.7em; border-left: 4px solid var(--aru-teal); display: flex; justify-content: space-between; align-items: center;">
+            <span>"Lee el archivo <strong>tijuana_mun_osm.geojson</strong> usando la librería <strong>GeoPandas</strong> y crea un mapa usando la variable <strong>estaciones_bus</strong> como color de relleno."</span>
+            <span style="font-size: 0.85em; color: var(--aru-yellow); white-space: nowrap; margin-left: 1em;">⚡ Código generado en 10 seg</span>
+          </div>
+
+          <!-- Captura Panorámica Recortada ej03_slide15.jpeg (3536x1160) -->
+          <div style="text-align: center;">
+            <img src="img/ej03_slide15.jpeg" class="slide-img" style="width: 98%; max-height: 420px; margin: 0 auto; display: block;" alt="Generación automática de código y mapa temático inicial en Google Colab">
+          </div>
+        </div>
+
+        <aside class="notes">
+          Destacar la sensación de "magia": no tuvimos que escribir ni una sola línea de código nosotros mismos.
+        </aside>
+      </section>
+
+      <!-- Slide 20: Paso 4 - Iteración en Lenguaje Natural (Layout 2 Cols Optimizado) -->
+      <section>
+        <div style="max-width: 1150px; margin: 0 auto;">
+          <span class="tag-pill orange">Paso 4 · Ejemplo 03</span>
+          <h2>Iterar Platicando con la IA</h2>
+          <p class="subtitle-text" style="margin-bottom: 0.6em;">Refinar el mapa sin tocar ni una línea de programación.</p>
+
+          <div style="display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 1.2em; align-items: center; text-align: left;">
+            <div>
+              <div class="prompt-snippet" style="font-size: 0.65em; line-height: 1.5; padding: 1.1em; border-left: 4px solid var(--aru-orange);">Modifica el mapa anterior con estos ajustes:
+
+1. Rampa de color: Aplica un gradiente de blanco a rojo (rojo = mayor lejanía a transporte).
+
+2. Mapa base: Añade calles en escala de grises usando contextily (CartoDB.Positron).
+
+3. Simbología: Agrega leyenda en la esquina inferior izquierda: "Distancia a estaciones de bus (m)".
+
+4. Exportación: Guarda la imagen en formato PNG en alta resolución a 300 dpi.</div>
+
+              <div class="content-box" style="margin-top: 0.7em; padding: 0.65em 0.85em; font-size: 0.78em; background: var(--mono-50);">
+                <strong>💡 Clave pedagógica:</strong> Conversar con la IA para pedir ajustes progresivos evita errores de sintaxis y acelera la producción cartográfica.
+              </div>
+            </div>
+
+            <!-- Imagen Panorámica Recortada ej03_slide17.jpeg (3668x1608) -->
+            <div style="text-align: center;">
+              <img src="img/ej03_slide17.jpeg" class="slide-img" style="width: 100%; max-height: 480px; display: block; margin: 0 auto;" alt="Mapa iterado con mapa base CartoDB y gradiente blanco-rojo">
+              <p class="img-caption">Resultado: Contexto urbano de calles integrado y escala cromática clara</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Mostrar cómo el mapa pasa de una silueta flotante a una cartografía urbana contextualizada con calles y avenidas.
+        </aside>
+      </section>
+
+      <!-- Slide 21: Paso 5 - Del Mapa a la Decisión (Layout 2 Cols Optimizado) -->
+      <section>
+        <div style="max-width: 1150px; margin: 0 auto;">
+          <span class="tag-pill teal">Paso 5 · Ejemplo 03</span>
+          <h2>Del Mapa a la Decisión de Gobierno</h2>
+          <p class="subtitle-text" style="margin-bottom: 0.6em;">El mapa es solo el medio; el fin es sustentar la inversión municipal.</p>
+
+          <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; align-items: center; text-align: left;">
+            <!-- Imagen Panorámica Recortada ej03_slide11.jpeg (3660x1556) -->
+            <div style="text-align: center;">
+              <img src="img/ej03_slide11.jpeg" class="slide-img" style="width: 100%; max-height: 480px; display: block; margin: 0 auto;" alt="Lámina completa de análisis espacial, histograma y estadísticas">
+            </div>
+
+            <div class="content-box" style="padding: 1.2em;">
+              <h4 style="color: var(--mono-900); margin-bottom: 0.6em;">Evidencia para el Cabildo:</h4>
+              <ul style="font-size: 0.82em; line-height: 1.6; margin-left: 1.1em;">
+                <li><strong>Distancia promedio:</strong> 9.5 km hacia la estación de autobús o escuela más cercana.</li>
+                <li><strong>Brecha periférica:</strong> El 25% del territorio se ubica a más de 12 km de servicios urbanos esenciales.</li>
+                <li><strong>Histograma de frecuencias:</strong> Muestra con precisión cuántas colonias o hexágonos sufren desabasto.</li>
+                <li><strong>Transparencia técnica:</strong> El cuaderno de Colab queda guardado y cualquier funcionario puede auditarlo y replicarlo.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Conectar con la toma de decisiones: "Con esta gráfica y este mapa justifican una nueva ruta de transporte o una clínica en la periferia".
+        </aside>
+      </section>
+
+      <!-- Slide 22: Profundización - Prompts Avanzados e Índices Territoriales (slide20 y slide21) -->
+      <section>
+        <div style="max-width: 1150px; margin: 0 auto;">
+          <span class="tag-pill purple">Profundización · Para ir más lejos</span>
+          <h2>Cálculo de Índices Territoriales con IA</h2>
+          <p class="subtitle-text" style="margin-bottom: 0.6em;">Combinar múltiples variables espaciales en un "Índice de Aislamiento".</p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.1em; align-items: start; text-align: left;">
+            <!-- Imagen Recortada ej03_slide20.jpeg (2512x796) -->
+            <div>
+              <div class="card accent-orange" style="margin-bottom: 0.6em; padding: 0.6em 0.8em;">
+                <strong>1. Prompt Simple de Índice</strong>
+                <p style="font-size: 0.82em;">Pide a la IA cruzar hospitales, escuelas y transporte estilo mapa de calor.</p>
+              </div>
+              <img src="img/ej03_slide20.jpeg" class="slide-img" style="width: 100%; max-height: 300px; display: block;" alt="Prompt de índice territorial">
+            </div>
+
+            <!-- Imagen Recortada ej03_slide21.jpeg (3460x1520) -->
+            <div>
+              <div class="card accent-teal" style="margin-bottom: 0.6em; padding: 0.6em 0.8em;">
+                <strong>2. Prompt Metodológico Completo</strong>
+                <p style="font-size: 0.82em;">Normaliza variables con <code>scikit-learn (MinMaxScaler)</code> e invierte empleo.</p>
+              </div>
+              <img src="img/ej03_slide21.jpeg" class="slide-img" style="width: 100%; max-height: 300px; display: block;" alt="Prompt avanzado con normalización MinMaxScaler">
+            </div>
+          </div>
+
+          <p style="font-size: 0.72em; color: var(--mono-500); margin-top: 0.7em; text-align: center;">
+            El código completo y la fórmula de normalización están disponibles en el <strong>portal web de práctica autónoma</strong>.
+          </p>
+        </div>
+
+        <aside class="notes">
+          Mencionar que este ejercicio avanzado queda como reto para casa en el portal web de GitHub Pages.
+        </aside>
+      </section>
+      <!-- Slide 22: Buenas Prácticas en el Municipio -->
+      <section>
+        <span class="tag-pill">Gobernanza y Ética</span>
+        <h2>Buenas Prácticas en la Gestión Pública</h2>
+        <p class="subtitle-text">Cómo trabajar con IA de forma segura, ordenada y profesional.</p>
+
+        <div class="three-cols">
+          <div class="card accent-teal">
+            <h4>1. Instruir con Claridad</h4>
+            <p>Define siempre el rol técnico, la colonia de estudio y las normas o reglamentos aplicables antes de pedir resultados.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>2. Cuidar la Información</h4>
+            <p>Retira folios catastrales sensibles, nombres de vecinos y expedientes en juicio antes de subir datos a cualquier plataforma.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4>3. Crear Banco de Prompts</h4>
+            <p>Guarden en una carpeta compartida de la dirección los prompts que mejor resultado les dieron para que todo el equipo los aproveche.</p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          47 a 53 minutos de la clase. Establecer estándares institucionales en la oficina.
+        </aside>
+      </section>
+
+      <!-- Slide 23: El Humano al Mando -->
+      <section>
+        <span class="tag-pill purple">Principio Rector</span>
+        <h2>El Humano al Mando: La IA Propone, Tú Decides</h2>
+        <p class="subtitle-text">Ningún algoritmo conoce los retos de tu municipio como tú y tu equipo.</p>
+
+        <div class="content-box" style="margin-bottom: 1em;">
+          <h4 style="color: var(--mono-900); text-align: center;">El Ciclo de Control Técnico en 4 Pasos:</h4>
+          <div class="options-grid" style="margin-top: 1em;">
+            <div class="card" style="background: var(--mono-50);"><strong>1. Instruir:</strong> El técnico municipal define el objetivo y las restricciones.</div>
+            <div class="card" style="background: var(--mono-50);"><strong>2. Generar:</strong> La IA produce una primera propuesta en borrador rápido.</div>
+            <div class="card" style="background: var(--mono-50);"><strong>3. Revisar:</strong> El funcionario detecta omisiones normativas y riesgos locales.</div>
+            <div class="card" style="background: var(--mono-50);"><strong>4. Aprobar:</strong> Se valida con la firma y el criterio técnico responsable.</div>
+          </div>
+        </div>
+
+        <div class="content-box" style="font-size: 0.8em; margin: 0; background: var(--mono-50); border-left: 4px solid var(--aru-orange);">
+          <strong>Recordatorio legal:</strong> Los borradores generados por IA no tienen validez legal ni técnica por sí solos; la firma y la responsabilidad administrativa corresponden siempre a la autoridad municipal.
+        </div>
+
+        <aside class="notes">
+          Enfatizar la responsabilidad del funcionario: la IA es el lápiz, ellos son los arquitectos.
+        </aside>
+      </section>
+
+      <!-- Slide 24: Transparencia ante Cabildo -->
+      <section>
+        <span class="tag-pill teal">Certeza Pública</span>
+        <h2>Transparencia hacia el Cabildo y la Ciudadanía</h2>
+        <p class="subtitle-text">Verificar antes de dictaminar y comunicar con total honestidad.</p>
+
+        <div class="two-cols">
+          <div class="content-box">
+            <h4 style="color: var(--mono-900);">Puntos de Chequeo Obligatorios:</h4>
+            <ul>
+              <li><strong>Control cartográfico:</strong> Escala gráfica, norte, nombres de calles y simbología completa.</li>
+              <li><strong>Cruce normativo:</strong> Ninguna propuesta debe invadir cauces federales ni áreas de recarga acuífera.</li>
+              <li><strong>Cifras oficiales:</strong> Las sumas deben coincidir con catastro y padrones validados.</li>
+            </ul>
+          </div>
+
+          <div class="content-box" style="background: var(--mono-50); border-left: 4px solid var(--aru-purple);">
+            <h4 style="color: var(--aru-purple);">Leyenda de Transparencia Recomendada:</h4>
+            <p style="font-size: 0.85em; font-style: italic; color: var(--mono-800); margin-top: 0.5em;">
+              "Insumo técnico de apoyo elaborado con asistencia de Inteligencia Artificial y validado por la Dirección Municipal de Planeación."
+            </p>
+            <p style="font-size: 0.75em; color: var(--mono-600); margin-top: 0.8em;">
+              En imágenes urbanas: Aclarar siempre que son <em>propuestas conceptuales de diseño</em>, no proyectos ejecutivos de obra civil.
+            </p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Proteger al servidor público: la honestidad en el uso de IA genera confianza en el Cabildo.
+        </aside>
+      </section>
+
+      <!-- Slide 25: Tarea para la Próxima Sesión -->
+      <section>
+        <span class="tag-pill orange">Entregable para la Sesión 2</span>
+        <h2>Tarea: Ficha de Priorización Municipal #1</h2>
+        <p class="subtitle-text">Conectar lo aprendido con el problema más urgente de tu municipio.</p>
+
+        <div class="content-box">
+          <h4 style="color: var(--mono-900);">Tres preguntas breves en una sola página:</h4>
+          <ol style="font-size: 0.85em; line-height: 1.6; margin-top: 0.6em;">
+            <li><strong>Desafío territorial municipal:</strong> Describe en 2 o 3 líneas un problema real de tu municipio (ej. periferias sin banquetas, falta de parques, inundaciones).</li>
+            <li><strong>Conexión con las 3 técnicas de hoy:</strong>
+              <ul>
+                <li>a) ¿Cuál técnica consideras más urgente para tu área? <em>(1. Renders de calle, 2. Asesor PRESUME, o 3. Mapas en Colab)</em>.</li>
+                <li>b) ¿Por qué esa técnica resolvería tu problema principal?</li>
+              </ul>
+            </li>
+            <li><strong>Producto esperado al finalizar el curso:</strong> ¿Qué entregable concreto te gustaría haber construido al terminar las clases?</li>
+          </ol>
+        </div>
+
+        <p style="font-size: 0.75em; color: var(--mono-500); margin-top: 0.8em;">
+          Encuentras el formato listo para imprimir o resolver digitalmente en nuestro portal web.
+        </p>
+
+        <aside class="notes">
+          53 a 60 minutos. Motivar la entrega: es la base para el seguimiento personalizado del curso.
+        </aside>
+      </section>
+
+      <!-- Slide 26: Repositorio Web Autónomo -->
+      <section>
+        <span class="tag-pill teal">Recurso Abierto</span>
+        <h2>Repositorio y Guía Web para Practicar</h2>
+        <p class="subtitle-text">Todos los prompts, datos e instrucciones disponibles para practicar a tu propio ritmo.</p>
+
+        <div class="three-cols" style="margin-top: 1em;">
+          <div class="card accent-teal">
+            <h4>📋 Prompts en 1 Clic</h4>
+            <p>Botones directos para copiar los prompts de Calle Completa, PRESUME y Google Colab sin errores de tipeo.</p>
+          </div>
+          <div class="card accent-orange">
+            <h4>📁 Capa de Datos</h4>
+            <p>Descarga directa de <code>tijuana_mun_osm.geojson</code> para hacer tus mapas en Colab hoy mismo.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4>🚀 Prompts Avanzados</h4>
+            <p>Cálculo del <strong>Índice de Aislamiento Territorial</strong> combinando múltiples variables espaciales.</p>
+          </div>
+        </div>
+
+        <div class="content-box" style="margin-top: 1.2em; text-align: center; background: var(--mono-900); color: white;">
+          <h4 style="color: white; margin: 0; font-size: 0.95em;">Enlace al portal en GitHub Pages: <code>/docs/index.html</code></h4>
+        </div>
+
+        <aside class="notes">
+          Indicarles que pueden compartir la liga con sus compañeros de oficina.
+        </aside>
+      </section>
+
+      <!-- Slide 27: Cierre Motivador (Minimalista ARU) -->
+      <section data-background-color="#0f172a" style="color: white; text-align: left;">
+        <div style="max-width: 950px; margin: 0 auto; padding-top: 1.8em;">
+          <div style="display: flex; align-items: center; gap: 0.6em; margin-bottom: 1.2em;">
+            <div class="aru-logo-mark">
+              <span class="aru-dot t"></span>
+              <span class="aru-dot o"></span>
+              <span class="aru-dot p"></span>
+              <span class="aru-dot y"></span>
+            </div>
+            <span class="tag-pill outline" style="color: #cbd5e1; border-color: #334155; margin: 0;">Reflexión Final</span>
+          </div>
+
+          <h2 style="color: white; font-size: 2.1em; margin-bottom: 0.3em;">La tecnología no reemplaza el compromiso</h2>
+          <h3 style="color: var(--aru-yellow); font-size: 1.4em; margin-bottom: 1.2em;">¡Lo amplifica!</h3>
+
+          <div class="content-box" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: white; max-width: 850px; margin: 0 0 2em;">
+            <p style="font-size: 0.92em; line-height: 1.6; color: #e2e8f0; margin: 0;">
+              <em>"El futuro del territorio en Guanajuato se construye con criterio técnico, sensibilidad social y herramientas modernas que multiplican nuestro alcance."</em>
+            </p>
+          </div>
+
+          <div style="font-size: 0.78em; color: #94a3b8; border-top: 1px solid #334155; padding-top: 1.2em; display: flex; justify-content: space-between;">
+            <span><strong>¡Muchas gracias por su compromiso con sus municipios!</strong></span>
+            <span>Facilitador: Ricardo Ochoa Sosa</span>
+            <span style="color: var(--aru-teal);">www.arumx.org</span>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Agradecer, abrir 2 minutos para preguntas finales y recordar la entrega de la Ficha #1 en la siguiente sesión.
+        </aside>
+      </section>
+
+    </div>
+
+    <!-- Barra inferior fija minimalista -->
+    <div class="footer-bar">
+      <div class="footer-brand">
+        <div class="aru-logo-mark" style="transform: scale(0.75);">
+          <span class="aru-dot t"></span>
+          <span class="aru-dot o"></span>
+          <span class="aru-dot p"></span>
+          <span class="aru-dot y"></span>
+        </div>
+        <span>IA Generativa para el Análisis Territorial · Guanajuato</span>
+      </div>
+      <span>Presiona <strong>S</strong> para notas de facilitador | Flechas para navegar</span>
+    </div>
+  </div>
+
+  <!-- Reveal.js Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      controls: true,
+      progress: true,
+      center: true,
+      transition: 'fade', // Transición minimalista limpia
+      transitionSpeed: 'fast',
+      width: 1200,
+      height: 700,
+      margin: 0.08,
+      plugins: [ RevealNotes ]
+    });
+  </script>
+</body>
+</html>

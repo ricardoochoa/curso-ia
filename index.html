@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IA Generativa para el Análisis Territorial | Guía de Práctica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-dark: #0f172a;
+      --primary-light: #3b82f6;
+      --accent: #d97706;
+      --accent-light: #fef3c7;
+      --teal: #0f766e;
+      --teal-light: #ccfbf1;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --success: #15803d;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--slate-50);
+      color: var(--slate-800);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Navegación Fija */
+    header.site-header {
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--slate-200);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--primary-dark);
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .brand-text h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      font-size: 0.75rem;
+      color: var(--slate-600);
+    }
+
+    nav.site-nav {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.2rem;
+    }
+
+    nav.site-nav a {
+      text-decoration: none;
+      color: var(--slate-700);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    nav.site-nav a:hover {
+      background-color: var(--slate-100);
+      color: var(--primary);
+    }
+
+    nav.site-nav a.highlight {
+      background-color: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1e293b 100%);
+      color: white;
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero h2 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--slate-300);
+      max-width: 750px;
+      margin: 0 auto 1.75rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: #93c5fd;
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Layout Principal */
+    .main-container {
+      max-width: 1100px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* Secciones y Tarjetas */
+    .module-card {
+      background: white;
+      border-radius: var(--radius);
+      border: 1px solid var(--slate-200);
+      box-shadow: var(--shadow);
+      padding: 2.25rem;
+      scroll-margin-top: 5rem;
+    }
+
+    .module-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 2px solid var(--slate-100);
+      padding-bottom: 1.25rem;
+    }
+
+    .module-number {
+      background: var(--primary);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 800;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .module-title h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      line-height: 1.25;
+    }
+
+    .module-title p {
+      font-size: 0.95rem;
+      color: var(--slate-600);
+      margin-top: 0.25rem;
+    }
+
+    /* Cajas de Información y Alertas */
+    .callout {
+      background-color: var(--slate-100);
+      border-left: 4px solid var(--primary-light);
+      padding: 1.15rem 1.35rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .callout.tip {
+      background-color: #ecfdf5;
+      border-left-color: #10b981;
+      color: #065f46;
+    }
+
+    .callout.warning {
+      background-color: #fffbeb;
+      border-left-color: var(--accent);
+      color: #92400e;
+    }
+
+    .callout.info {
+      background-color: #eff6ff;
+      border-left-color: var(--primary-light);
+      color: #1e40af;
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 700;
+    }
+
+    /* Bloques de Código y Prompts */
+    .prompt-box {
+      margin: 1.5rem 0;
+      background: #0f172a;
+      border-radius: 10px;
+      border: 1px solid #1e293b;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .prompt-header {
+      background: #1e293b;
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #cbd5e1;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .copy-btn:hover {
+      background: #2563eb;
+    }
+
+    .copy-btn.copied {
+      background: var(--success);
+    }
+
+    .prompt-content {
+      padding: 1.25rem;
+      color: #f8fafc;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+
+    /* Pasos Numerados */
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-badge {
+      background: var(--slate-100);
+      color: var(--primary);
+      border: 2px solid var(--primary-light);
+      font-weight: 800;
+      font-size: 0.85rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .step-body h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 0.2rem;
+    }
+
+    .step-body p {
+      font-size: 0.92rem;
+      color: var(--slate-600);
+    }
+
+    /* Galería de Imágenes y Comparador */
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.75rem 0;
+    }
+
+    .image-card {
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .image-card:hover img {
+      transform: scale(1.02);
+    }
+
+    .image-caption {
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      color: var(--slate-700);
+      background: white;
+      border-top: 1px solid var(--slate-200);
+      font-weight: 500;
+    }
+
+    .image-caption strong {
+      color: var(--slate-900);
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 0.15rem;
+    }
+
+    /* Botones de Acción */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #172554;
+    }
+
+    .btn-accent {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background-color: #b45309;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1.5px solid var(--slate-300);
+      color: var(--slate-700);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--slate-100);
+      border-color: var(--slate-400);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    /* Tabla de Dimensiones PRESUME */
+    .presume-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.9rem;
+    }
+
+    .presume-table th {
+      background-color: var(--slate-100);
+      color: var(--slate-800);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid var(--slate-200);
+      font-weight: 700;
+    }
+
+    .presume-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--slate-200);
+      vertical-align: top;
+    }
+
+    .presume-table tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .presume-letter {
+      display: inline-block;
+      width: 26px;
+      height: 26px;
+      background: var(--teal);
+      color: white;
+      text-align: center;
+      line-height: 26px;
+      border-radius: 6px;
+      font-weight: 800;
+      margin-right: 0.4rem;
+    }
+
+    /* Sección de Tarea Imprimible */
+    .task-container {
+      background: #ffffff;
+      border: 2px dashed var(--slate-300);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .task-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .task-field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--slate-600);
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .task-field .line-input {
+      border-bottom: 1px solid var(--slate-300);
+      min-height: 28px;
+    }
+
+    .task-question {
+      margin-bottom: 1.5rem;
+    }
+
+    .task-question h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 0.4rem;
+    }
+
+    .task-question p {
+      font-size: 0.85rem;
+      color: var(--slate-600);
+      margin-bottom: 0.5rem;
+    }
+
+    .task-textarea-sim {
+      border: 1px solid var(--slate-200);
+      background: #fafafa;
+      border-radius: 6px;
+      height: 70px;
+    }
+
+    /* Footer */
+    footer.site-footer {
+      background-color: var(--slate-900);
+      color: var(--slate-300);
+      padding: 3rem 1.5rem 2rem;
+      margin-top: 4rem;
+      border-top: 1px solid #334155;
+    }
+
+    .footer-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .footer-container p {
+      font-size: 0.9rem;
+    }
+
+    /* Print Styles */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      .task-printable, .task-printable * {
+        visibility: visible;
+      }
+      .task-printable {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .hero h2 {
+        font-size: 1.75rem;
+      }
+      .module-card {
+        padding: 1.5rem;
+      }
+      .module-header {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navegación Fija -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="#" class="brand">
+        <span class="brand-badge">CURSO IA</span>
+        <div class="brand-text">
+          <h1>Análisis Territorial Municipal</h1>
+          <p>Guanajuato • Facilitador: Ricardo Ochoa Sosa</p>
+        </div>
+      </a>
+      <nav class="site-nav">
+        <a href="presentacion.html" target="_blank" style="background-color: var(--primary); color: white;">🖥️ Ver Diapositivas (Plan B)</a>
+        <a href="#ejemplo1">1. Calle Completa</a>
+        <a href="#ejemplo2">2. Proyectos PRESUME</a>
+        <a href="#ejemplo3">3. Mapas en Colab</a>
+        <a href="#avanzados">Prompts Avanzados</a>
+        <a href="#gobernanza">Buenas Prácticas</a>
+        <a href="#tarea" class="highlight">Ficha de Tarea</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">Repositorio de Práctica Autónoma</div>
+      <h2>Inteligencia Artificial Generativa para el Análisis Territorial</h2>
+      <p>Material de consulta, prompts listos para copiar, guías ilustradas y archivos de datos para los equipos técnicos de los municipios de Guanajuato.</p>
+      <div class="hero-meta">
+        <span>⏱️ <strong>Sesión:</strong> 60 minutos</span>
+        <span>📍 <strong>Enfoque:</strong> Soluciones prácticas sin tecnicismos</span>
+        <span>🧠 <strong>Modelo:</strong> El humano al mando</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenedor Principal -->
+  <main class="main-container">
+
+    <!-- Introducción y Filosofía -->
+    <section class="module-card">
+      <div class="module-header">
+        <div class="module-number">★</div>
+        <div class="module-title">
+          <h3>¿Cómo usar esta guía en tu trabajo diario?</h3>
+          <p>Tres técnicas para pasar de ser ejecutores manuales a estrategas del territorio.</p>
+        </div>
+      </div>
+      <p>Esta plataforma fue diseñada para acompañar tu aprendizaje después de la sesión interactiva. Cada módulo contiene las instrucciones exactas (<em>prompts</em>) que puedes copiar con un solo clic, explicaciones de qué hace cada parte y consejos para adaptar las herramientas a la realidad de tu municipio.</p>
+      
+      <div class="callout tip">
+        <strong>💡 Regla de oro para funcionarios municipales:</strong>
+        La Inteligencia Artificial es un excelente copiloto para redactar borradores, ordenar tablas y generar ideas visuales en segundos, pero <strong>tú tienes la última palabra</strong>. Ningún algoritmo conoce la realidad en campo, la normatividad ni a los vecinos de Guanajuato como tú.
+      </div>
+    </section>
+
+    <!-- Módulo 1: Ejemplo 1 -->
+    <section id="ejemplo1" class="module-card">
+      <div class="module-header">
+        <div class="module-number">01</div>
+        <div class="module-title">
+          <h3>Ejemplo 1: Visualización Urbana y "Calle Completa"</h3>
+          <p>De una fotografía de calle deteriorada a un render fotorrealista de espacio público sostenible.</p>
+        </div>
+      </div>
+
+      <p>Cuando queremos convencer al Cabildo, a comités vecinales o a dependencias estatales de una obra de banquetas o ciclovía, un plano técnico en 2D o un texto largo no transmite el impacto. Con este flujo de 2 pasos, utilizas cualquier modelo multimodal (como ChatGPT Plus o Gemini Advanced) para analizar una foto real y producir un render de "antes y después" sin pagar licencias de modelado 3D.</p>
+
+      <ul class="steps-list">
+        <li class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-body">
+            <h4>Paso 1: Diagnóstico Técnico (Separar la mente del dibujo)</h4>
+            <p>Adjunta la fotografía de la vialidad en el chat y copia el <strong>Prompt 1</strong>. Le pedimos a la IA que <em>no dibuje nada todavía</em> y que describa en texto qué elementos arquitectónicos y personas debe conservar intactos para no alterar la identidad del sitio.</p>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Prompt 1.1 -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <span>PROMPT 1.1: Diagnóstico Técnico y Propuesta de Intervención</span>
+          <button class="copy-btn" onclick="copyPrompt('prompt-1-1', this)">📋 Copiar Prompt</button>
+        </div>
+        <div class="prompt-content" id="prompt-1-1">Actúa como especialista sénior en diseño urbano sostenible, movilidad activa e infraestructura verde. Analiza detalladamente la fotografía adjunta de esta vialidad y propón una intervención integral de rediseño basada en los principios de "Calle Completa" y desarrollo urbano sostenible.
+
+Organiza tu propuesta de forma clara y concisa en estas 4 categorías para que yo pueda revisarla antes de generar una visualización:
+
+1. Reasignación del espacio vial y movilidad sostenible: Propón cómo redistribuir la sección de la calle priorizando la pirámide de movilidad (ampliación de banquetas, cruces peatonales seguros a nivel o cebras, ciclovías protegidas, pacificación del tránsito o carriles exclusivos de transporte público, según lo permita el ancho visible).
+2. Infraestructura verde y adaptación climática: Sugiere elementos de diseño sensible al agua y confort térmico acordes al entorno visible (arbolado urbano de sombra, jardines de lluvia, pavimentos permeables o franjas de infiltración).
+3. Accesibilidad universal y equipamiento: Indica mejoras concretas como rampas peatonales, guías podotáctiles, mobiliario urbano de descanso e iluminación a escala humana.
+4. Elementos invariantes (Anclas visuales): Identifica brevemente las edificaciones, fachadas, topografía y personas presentes en la foto original que deberán conservarse intactas para mantener la identidad del sitio.
+
+IMPORTANTE: NO generes ninguna imagen todavía. Limítate a entregar este diagnóstico estructurado y, al finalizar, pregúntame qué ajustes, adiciones o recortes deseo hacer a la propuesta antes de pasar a la generación visual.</div>
+      </div>
+
+      <div class="callout warning">
+        <strong>⚠️ Etapa Intermedia: Supervisión Humana (Human-in-the-Loop)</strong>
+        Lee con atención el diagnóstico que entregue la IA. Si deseas ajustar la solución de movilidad o la vegetación, corrígelo en una sola línea antes de dar el siguiente paso. Por ejemplo: <em>"La ciclovía debe ser un carril pintado de verde; prioriza banquetas con rampas y árboles de sombra nativos"</em>.
+      </div>
+
+      <ul class="steps-list">
+        <li class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-body">
+            <h4>Paso 2: Render Fotorrealista Comparativo</h4>
+            <p>En el <strong>mismo chat</strong>, pega el <strong>Prompt 2</strong>. Incluye tus correcciones en el corchete. La IA aplicará las restricciones fotográficas (misma perspectiva, luz solar idéntica, mismas casas y fachadas) para generar una comparativa creíble y profesional.</p>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Prompt 1.2 -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <span>PROMPT 1.2: Generación Fotorrealista de la Imagen Comparativa</span>
+          <button class="copy-btn" onclick="copyPrompt('prompt-1-2', this)">📋 Copiar Prompt</button>
+        </div>
+        <div class="prompt-content" id="prompt-1-2">Excelente diagnóstico. Ahora actúa como especialista en visualización arquitectónica fotorrealista y edición espacial de imágenes. Genera una nueva versión de la fotografía original aplicando las mejoras de calle completa y diseño urbano sostenible que acabas de proponer, incorporando únicamente estos ajustes específicos de mi parte:
+
+[OPCIONAL: Escribe aquí tus ajustes locales, por ejemplo: "No incluyas ciclovía por falta de espacio; prioriza banquetas más amplias y árboles de sombra nativos de la región" / Si estás de acuerdo con toda la propuesta previa, borra este renglón].
+
+Para que la nueva imagen funcione como una comparativa técnica rigurosa ("antes y después"), respeta estrictamente estas restricciones visuales:
+
+1. Geometría y encuadre idénticos: Mantén exactamente la misma posición de cámara, altura del horizonte, distancia focal, perspectiva y ángulo de visión de la fotografía original.
+2. Conservación estricta del contexto edificado y social: Conserva intactas todas las edificaciones existentes (alturas, volúmenes, materiales, colores y estado de las fachadas), así como la ubicación, postura y apariencia de las personas presentes en la escena original.
+3. Intervención exclusiva en el espacio público: Modifica únicamente la superficie de rodamiento, banquetas, señalamiento horizontal/vertical, vegetación y mobiliario urbano dentro del derecho de vía.
+4. Estética hiperrealista: El resultado debe lucir como una fotografía documental real tomada con cámara réflex profesional, nunca como ilustración digital, pintura o render 3D estilizado. Iguala la dirección de la luz solar, las sombras proyectadas, el clima y las texturas realistas de materiales (asfalto desgastado, concreto, adoquín, follaje natural) de la toma original.</div>
+      </div>
+
+      <!-- Galería de Resultados -->
+      <h4 style="margin-top: 1.5rem; font-size: 1.05rem;">Resultado del Proceso: Caso Camino a San Cayetano de Luna</h4>
+      <div class="image-grid">
+        <div class="image-card">
+          <img src="img/original.png" alt="Fotografía original de la calle">
+          <div class="image-caption">
+            <strong>Antes: Calle Original (Street View)</strong>
+            Vialidad sin banquetas continuas, carencia de sombra y peatones y ciclistas expuestos al arroyo vehicular.
+          </div>
+        </div>
+        <div class="image-card">
+          <img src="img/render.jpeg" alt="Propuesta de rediseño generada con IA">
+          <div class="image-caption">
+            <strong>Después: Propuesta de Calle Completa</strong>
+            Mismas fachadas y vecinos, pero con banqueta accesible, ciclovía confinada, arbolado y jardineras de infiltración.
+          </div>
+        </div>
+        <div class="image-card">
+          <img src="img/montaje.png" alt="Montaje comparativo antes y después">
+          <div class="image-caption">
+            <strong>Ficha Comparativa Técnica</strong>
+            Montaje listo para integrar en carpetas de gestión, comités vecinales y presentaciones al Cabildo.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Módulo 2: Ejemplo 2 -->
+    <section id="ejemplo2" class="module-card">
+      <div class="module-header">
+        <div class="module-number">02</div>
+        <div class="module-title">
+          <h3>Ejemplo 2: Asesor Interactivo de Proyectos PRESUME</h3>
+          <p>Acompañamiento guiado para formular proyectos con valor público y sostenibilidad territorial.</p>
+        </div>
+      </div>
+
+      <p>Muchas solicitudes ciudadanas o ideas de obra municipal llegan como simples compras de materiales (<em>"pavimentar 500 metros"</em> o <em>"poner luminarias"</em>). Cuando las enviamos a evaluación estatal o federal, son rechazadas porque no explican qué problema resuelven ni cómo se mantendrán en el tiempo. Este prompt convierte a la IA en un <strong>asesor socrático</strong> que te hace 1 o 2 preguntas por turno para fortalecer tu proyecto bajo la metodología <strong>PRESUME</strong> y el Marco Lógico.</p>
+
+      <table class="presume-table">
+        <thead>
+          <tr>
+            <th>Dimensión</th>
+            <th>Qué evalúa en el municipio</th>
+            <th>Pregunta clave para tu proyecto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="presume-letter">P</span> <strong>Patrimonio</strong></td>
+            <td>Identidad local, historia, arquitectura tradicional e imagen urbana.</td>
+            <td>¿El proyecto respeta y realza el carácter del barrio o la comunidad?</td>
+          </tr>
+          <tr>
+            <td><span class="presume-letter">R</span> <strong>Riesgos</strong></td>
+            <td>Inundaciones, deslaves, fallas geológicas y atlas municipal de riesgos.</td>
+            <td>¿La obra previene riesgos o estamos construyendo en zona vulnerable?</td>
+          </tr>
+          <tr>
+            <td><span class="presume-letter">E</span> <strong>Ecosistema</strong></td>
+            <td>Arbolado nativo, sombra, reducción de calor e infiltración de lluvia.</td>
+            <td>¿Conservamos árboles sanos y usamos especies de bajo consumo de agua?</td>
+          </tr>
+          <tr>
+            <td><span class="presume-letter">S</span> <strong>Servicios</strong></td>
+            <td>Agua, drenaje, alumbrado eficiente y espacios de convivencia activa.</td>
+            <td>¿Cierra rezagos básicos y crea áreas dignas para las familias?</td>
+          </tr>
+          <tr>
+            <td><span class="presume-letter">U</span> <strong>Uso de Suelo</strong></td>
+            <td>Aprovechamiento de predios baldíos centrales y freno a la dispersión.</td>
+            <td>¿Fomenta una ciudad compacta o encarece llevar servicios lejos?</td>
+          </tr>
+          <tr>
+            <td><span class="presume-letter">M</span> <strong>Movilidad</strong></td>
+            <td>Peatones, personas mayores, personas con discapacidad y transporte.</td>
+            <td>¿Permite caminar seguro y conecta a menos de 15 minutos a pie?</td>
+          </tr>
+          <tr>
+            <td><span class="presume-letter">E</span> <strong>Economía</strong></td>
+            <td>Comercio barrial, empleo y presupuesto para mantenimiento anual.</td>
+            <td>¿Cómo se pagará la operación y mantenimiento de la obra año con año?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Prompt 2 -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <span>PROMPT 2.1: Plantilla del Asesor Territorial PRESUME</span>
+          <button class="copy-btn" onclick="copyPrompt('prompt-presume', this)">📋 Copiar Prompt</button>
+        </div>
+        <div class="prompt-content" id="prompt-presume"># ROL Y OBJETIVO
+Actúa como un asesor experto, práctico y empático en planeación territorial municipal y formulación de proyectos de inversión pública sostenible. Tu objetivo es acompañarme paso a paso para analizar, dialogar y fortalecer mi propuesta de proyecto utilizando la metodología PRESUME y el enfoque de Cadena de Valor Público (Marco Lógico), hasta generar una Descripción Ejecutiva sólida.
+
+# BASE METODOLÓGICA (CONTEXTO DE REFERENCIA)
+Evalúa y orienta el proyecto considerando estos tres pilares:
+
+1. Contexto Demográfico y Territorial:
+   - Evitar expandir la mancha urbana si la población municipal está estancada o decreciendo (priorizar rehabilitar barrios existentes y predios intraurbanos para no encarecer los servicios públicos).
+   - Considerar el envejecimiento poblacional y el sistema de cuidados (accesibilidad universal, banquetas amplias con rampas, sombra y cercanía para personas mayores, infancias y personas cuidadoras).
+
+2. Cadena de Valor Público (Marco Lógico):
+   - Problemática: Qué carencia, rezago o riesgo concreto viven hoy las personas (no definir el proyecto solo como compra de materiales u obra civil).
+   - Producto: Qué bien, infraestructura o servicio público específico se entregará.
+   - Resultado e Impacto: Qué beneficio medible cambiará en la vida cotidiana de la comunidad.
+
+3. Las 7 Dimensiones PRESUME:
+   - P (Patrimonio): Respeto e integración con la identidad local, historia, arquitectura tradicional e imagen urbana.
+   - R (Riesgos): Evitar construir en cauces, laderas inestables o zonas inundables; incorporar mitigación activa (ej. drenaje pluvial, vasos reguladores, muros de contención).
+   - E (Ecosistema): Conservar árboles sanos existentes, reforestar con especies nativas de bajo consumo hídrico para dar sombra (reducir islas de calor) e infiltrar agua de lluvia.
+   - S (Servicios e Infraestructura): Cerrar brechas básicas (agua, saneamiento, alumbrado eficiente, gestión de residuos) y crear parques barriales efectivos de convivencia (no simples camellones viales).
+   - U (Uso de Suelo): Aprovechar suelo intraurbano, lotes baldíos o inmuebles subutilizados; proteger tierras agrícolas y zonas forestales.
+   - M (Movilidad): Priorizar a peatones, accesibilidad universal, ciclistas y transporte público; acercar equipamientos y cuidados a menos de 15 minutos a pie.
+   - E (Economía): Impulsar el comercio y empleo local, y asegurar un esquema realista para financiar la operación y el mantenimiento anual de la obra.
+
+# REGLAS PEDAGÓGICAS Y DE INTERACCIÓN (MUY IMPORTANTE)
+- Avanza UNA fase a la vez. Nunca ejecutes todos los pasos en una sola respuesta.
+- NO busques que el proyecto obtenga la calificación máxima en las 7 dimensiones de PRESUME ni intentes convertir una obra puntual en un megaproyecto irreal. El propósito es ayudarme a razonar sobre el territorio, prevenir impactos negativos involuntarios ("no resolver un problema creando otro") y detectar mejoras realistas en el proyecto o en su redacción.
+- En la fase de diálogo, haz máximo 2 preguntas por turno para mantener una conversación ágil y clara.
+- Mantén un tono constructivo, claro y libre de tecnicismos innecesarios.
+
+# SECUENCIA DE TRABAJO PASO A PASO
+
+## FASE 1: Recepción del Proyecto
+Revisa si al final de este mensaje escribí la descripción de mi proyecto o si adjunté un documento:
+- Si NO incluí ni adjunté ningún proyecto: salúdame brevemente y pídeme que te platique mi idea de proyecto o adjunte un documento. Sugiéreme incluir, aunque sea en borrador: en qué consiste, dónde se ubicaría aproximadamente y a quiénes busca beneficiar. Detente ahí y espera mi respuesta.
+- Si SÍ incluí o adjunté el proyecto: pasa directamente a la Fase 2.
+
+## FASE 2: Revisión Inicial bajo la Lente PRESUME
+Analiza la propuesta y preséntame un diagnóstico claro y breve dividido en tres partes:
+1. Claridad de la Cadena de Valor: Evalúa qué tan claros están hoy la Problemática ciudadana, el Producto físico y el Resultado esperado, señalando qué falta precisar.
+2. Semáforo Reflexivo PRESUME: Evalúa brevemente las 7 dimensiones asignando un indicador orientativo a cada una (Fortaleza, Oportunidad de mejora, Alerta de riesgo o No aplica directamente / Neutral según la naturaleza del proyecto).
+3. Síntesis de Enfoque: Señala los 2 o 3 puntos clave donde vale más la pena reflexionar (sin exigir cubrir las 7 dimensiones al máximo).
+Al terminar este diagnóstico, inicia inmediatamente la Fase 3 formulando tus primeras 1 o 2 preguntas.
+
+## FASE 3: Diálogo de Mejora Iterativa
+Acompáñame mediante una conversación guiada (máximo 2 preguntas por mensaje) para:
+- Afinar la justificación del proyecto si solo falta explicar mejor lo que ya se tenía pensado.
+- Explorar ajustes prácticos al diseño, ubicación o mantenimiento del proyecto (ej. sumar sombra nativa, rampas accesibles, infiltración pluvial o prever costos de operación) cuando tengan sentido técnico y presupuestal.
+Después de cada respuesta mía, integra mis ideas, comenta brevemente cómo fortalecen la propuesta y pregúntame si deseamos explorar otro punto pendiente o si ya estoy satisfecho para generar la versión final.
+
+## FASE 4: Descripción Ejecutiva Final
+Únicamente cuando yo te confirme que estoy satisfecho con las mejoras acordadas, redacta una "Descripción Ejecutiva del Proyecto" profesional, clara y lista para integrarse en una ficha técnica o cartera municipal de inversión, con esta estructura:
+1. Nombre sugerido del proyecto (claro y orientado al beneficio público).
+2. Localización y contexto territorial.
+3. Cadena de Valor Público:
+   - Problemática que atiende
+   - Descripción del Producto (componentes de la obra o acción)
+   - Resultado e Impacto esperado en la población
+4. Alineación Territorial PRESUME (resumen ejecutivo de cómo el proyecto armoniza sus dimensiones clave, previene riesgos y asegura su sostenibilidad operativa y mantenimiento).
+5. Resumen de mejoras incorporadas (breve recuento de los ajustes logrados durante nuestra conversación).
+
+---
+[OPCIONAL: Escribe aquí la idea de tu proyecto o adjunta tu archivo. Si prefieres que la IA te guíe desde cero, borra esta línea o envía el mensaje tal como está.]</div>
+      </div>
+
+      <div class="callout tip">
+        <strong>💡 Consejo para el taller:</strong>
+        Puedes pegar el prompt tal cual sin escribir nada al final. La IA te responderá amablemente: <em>"¡Hola! Cuéntame qué idea de obra o intervención tienes en mente..."</em>. Dialoga con ella como si fuera un colega de planeación.
+      </div>
+    </section>
+
+    <!-- Módulo 3: Ejemplo 3 -->
+    <section id="ejemplo3" class="module-card">
+      <div class="module-header">
+        <div class="module-number">03</div>
+        <div class="module-title">
+          <h3>Ejemplo 3: Mapas y Métricas en Google Colab sin Programar</h3>
+          <p>La metodología de 5 etapas para procesar datos territoriales con lenguaje natural y librerías científicas.</p>
+        </div>
+      </div>
+
+      <p>Hasta hoy existía un gran dilema: los programas como QGIS o ArcGIS son visuales, pero si tus datos se actualizan, debes rehacer decenas de clics manuales uno por uno. Por otro lado, programar en Python o R automatiza todo, pero aprender la sintaxis toma meses. <strong>Con la IA Generativa rompemos ese dilema:</strong> le damos instrucciones en español a Gemini dentro de Google Colab y la IA escribe, ejecuta y ajusta el código por nosotros.</p>
+
+      <div class="image-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+        <div class="image-card">
+          <img src="img/ej03_slide02.jpeg" alt="Comparativa de curva de aprendizaje">
+          <div class="image-caption">
+            <strong>El dilema del análisis territorial superado</strong>
+            La IA permite tener la velocidad y replicabilidad del código con la facilidad del lenguaje cotidiano.
+          </div>
+        </div>
+        <div class="image-card">
+          <img src="img/ej03_slide10.jpeg" alt="Diagrama de 5 Etapas">
+          <div class="image-caption">
+            <strong>La Metodología de 5 Etapas</strong>
+            1. Preparación → 2. Datos → 3. Prompts → 4. Iteración → 5. Análisis e interpretación.
+          </div>
+        </div>
+      </div>
+
+      <!-- Recurso descargable -->
+      <div class="callout info">
+        <strong>📁 Archivo de datos para practicar:</strong>
+        Para este ejercicio utilizaremos una capa hexagonal con distancias a servicios urbanos. Puedes descargarla directamente aquí:
+        <div class="btn-group">
+          <a href="data/tijuana_mun_osm.geojson" download class="btn btn-primary">⬇️ Descargar tijuana_mun_osm.geojson (807 KB)</a>
+          <a href="https://colab.google.com" target="_blank" rel="noopener" class="btn btn-outline">🚀 Abrir Google Colab</a>
+        </div>
+      </div>
+
+      <!-- Guía paso a paso -->
+      <h4 style="margin: 1.5rem 0 0.75rem; font-size: 1.15rem;">Paso a Paso en Google Colab</h4>
+
+      <ul class="steps-list">
+        <li class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-body">
+            <h4>1. Preparación (En la nube y sin instalar nada)</h4>
+            <p>Entra a <a href="https://colab.google.com" target="_blank" rel="noopener">colab.google.com</a> con tu cuenta de correo de Gmail y presiona el botón <strong>"Nuevo cuaderno"</strong>.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-body">
+            <h4>2. Carga de datos</h4>
+            <p>Haz clic en el ícono de la <strong>carpeta</strong> en la barra lateral izquierda y arrastra el archivo <code>tijuana_mun_osm.geojson</code> directamente al panel.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="image-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+        <div class="image-card">
+          <img src="img/ej03_slide14.jpeg" alt="Carga de archivo y panel de Gemini">
+          <div class="image-caption">
+            <strong>Panel de archivos en Google Colab</strong>
+            El archivo se carga arrastrándolo a la carpeta. En la parte inferior se encuentra el acceso directo a Gemini.
+          </div>
+        </div>
+        <div class="image-card">
+          <img src="img/ej03_slide15.jpeg" alt="Ejecución del primer prompt">
+          <div class="image-caption">
+            <strong>Generación automática de código</strong>
+            Gemini interpreta el nombre de la variable y escribe el bloque de código con GeoPandas.
+          </div>
+        </div>
+      </div>
+
+      <ul class="steps-list">
+        <li class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-body">
+            <h4>3. Tu Primer Prompt de Mapeo</h4>
+            <p>Haz clic en el ícono azul de <strong>Gemini</strong> (o en el botón "+ Código") y escribe esta instrucción directa:</p>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Prompt 3.1 -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <span>PROMPT 3.1: Mapa Inicial con GeoPandas</span>
+          <button class="copy-btn" onclick="copyPrompt('prompt-mapa-basico', this)">📋 Copiar Prompt</button>
+        </div>
+        <div class="prompt-content" id="prompt-mapa-basico">Lee el archivo tijuana_mun_osm.geojson usando la librería GeoPandas y crea un mapa usando la variable estaciones_bus como color de relleno.</div>
+      </div>
+
+      <ul class="steps-list">
+        <li class="step-item">
+          <div class="step-badge">4</div>
+          <div class="step-body">
+            <h4>4. Iterar y Mejorar el Mapa (Sin tocar el código)</h4>
+            <p>Para pulir la visualización, pídele a Gemini cambios en lenguaje coloquial. No tienes que editar las líneas de Python; platícale como a un asistente:</p>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Prompt 3.2 -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <span>PROMPT 3.2: Iteración Estética y Mapa Base</span>
+          <button class="copy-btn" onclick="copyPrompt('prompt-mapa-iter', this)">📋 Copiar Prompt</button>
+        </div>
+        <div class="prompt-content" id="prompt-mapa-iter">Modifica el mapa anterior con los siguientes ajustes:
+1. Cambia la rampa de color a un gradiente que vaya de blanco a rojo (las zonas rojas deben indicar mayor lejanía a estaciones de transporte).
+2. Agrega un mapa base de calles en escala de grises usando la librería contextily (CartoDB.Positron).
+3. Añade una barra de escala de color o leyenda en la esquina inferior izquierda con el título "Distancia a estaciones de bus (m)".
+4. Guarda el resultado como una imagen PNG en alta resolución (300 dpi).</div>
+      </div>
+
+      <div class="image-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+        <div class="image-card">
+          <img src="img/ej03_slide17.jpeg" alt="Mapa iterado con mapa base CartoDB">
+          <div class="image-caption">
+            <strong>Resultado tras la iteración</strong>
+            Mapa con contexto urbano de calles, escala de distancias y paleta secuencial blanco-rojo lista para publicación.
+          </div>
+        </div>
+        <div class="image-card">
+          <img src="img/ej03_slide11.jpeg" alt="Lámina de análisis territorial">
+          <div class="image-caption">
+            <strong>5. Análisis e interpretación técnica</strong>
+            El mapa permite fundamentar ante el Cabildo dónde se concentran las brechas de cobertura de transporte público.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Módulo Avanzado: Profundización -->
+    <section id="avanzados" class="module-card">
+      <div class="module-header">
+        <div class="module-number">04</div>
+        <div class="module-title">
+          <h3>Para ir más lejos: Prompts Avanzados e Índices Territoriales</h3>
+          <p>Ejercicios complementarios para construir indicadores sintéticos combinando múltiples variables espaciales.</p>
+        </div>
+      </div>
+
+      <p>Una vez que domines los mapas simples de una sola variable, puedes pedirle a la IA que construya <strong>índices sintéticos de aislamiento o vulnerabilidad urbana</strong> cruzando distancias a escuelas, hospitales, paradas de autobús y empleo.</p>
+
+      <div class="image-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+        <div class="image-card">
+          <img src="img/ej03_slide20.jpeg" alt="Lámina de prompt de índice sintético">
+          <div class="image-caption">
+            <strong>Estructura del cálculo del índice</strong>
+            Instrucciones para normalizar variables con escalas de 0 a 1 y combinar distancias con empleo.
+          </div>
+        </div>
+        <div class="image-card">
+          <img src="img/ej03_slide21.jpeg" alt="Lámina con prompt detallado">
+          <div class="image-caption">
+            <strong>Prompt metodológico completo</strong>
+            Uso de scikit-learn (MinMaxScaler) para estandarizar indicadores dispares.
+          </div>
+        </div>
+      </div>
+
+      <!-- Prompt Avanzado -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <span>PROMPT AVANZADO: Cálculo y Mapeo del "Índice de Aislamiento Territorial"</span>
+          <button class="copy-btn" onclick="copyPrompt('prompt-aislamiento', this)">📋 Copiar Prompt</button>
+        </div>
+        <div class="prompt-content" id="prompt-aislamiento">Actúa como una científica de datos espaciales experta en Python. Vamos a trabajar con el archivo tijuana_mun_osm.geojson cargado en Colab.
+
+Escribe el código completo en Python para calcular un "Índice de Aislamiento Territorial" y visualizarlo en un mapa coroplético profesional. Sigue estrictamente esta metodología:
+
+1. Verificación e Instalación: Verifica si están instaladas las librerías geopandas, matplotlib, contextily y scikit-learn. Si falta alguna, incluye el comando de instalación (!pip install).
+2. Normalización de Datos: Normaliza las columnas "escuelas", "estaciones_bus" y "empleo" usando MinMaxScaler de scikit-learn para que queden en un rango común de 0 a 1.
+3. Lógica Territorial del Índice:
+   - Queremos evidenciar las zonas más desfavorecidas (lejos de servicios y con poco empleo).
+   - Para "escuelas" y "estaciones_bus": un valor alto de distancia suma al aislamiento (se mantiene directo).
+   - Para "empleo": un valor alto de unidades económicas reduce el aislamiento. Por lo tanto, invierte la variable restando su valor normalizado de 1 (1 - empleo_norm).
+4. Cálculo del Índice: Crea la columna "indice_aislamiento" calculando el promedio de estas tres variables normalizadas.
+5. Visualización Cartográfica:
+   - Genera un mapa coroplético usando la paleta "OrRd" o "magma", donde los tonos más oscuros e intensos representen mayor aislamiento territorial.
+   - Agrega un mapa base en escala de grises con contextily (CartoDB.Positron).
+   - Añade título claro, barra de escala de color con leyenda explicativa y guarda la imagen como "mapa_indice_aislamiento.png" a 300 dpi.
+6. Estadísticas de Respaldo: Imprime en texto la media, mediana y percentiles 25 y 75 del índice para documentar el reporte.</div>
+      </div>
+    </section>
+
+    <!-- Módulo 4: Gobernanza y Buenas Prácticas -->
+    <section id="gobernanza" class="module-card">
+      <div class="module-header">
+        <div class="module-number">05</div>
+        <div class="module-title">
+          <h3>Gobernanza y Buenas Prácticas en la Administración Pública</h3>
+          <p>Cómo utilizar la Inteligencia Artificial con certeza jurídica, técnica y ética.</p>
+        </div>
+      </div>
+
+      <div class="image-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="callout tip" style="margin: 0;">
+          <strong>1. El Ciclo de Control en 4 Pasos</strong>
+          <ol style="margin-left: 1.2rem; margin-top: 0.5rem; font-size: 0.88rem;">
+            <li><strong>Instruir:</strong> El técnico municipal define el objetivo y los límites.</li>
+            <li><strong>Generar:</strong> La IA produce el primer borrador rápido.</li>
+            <li><strong>Revisar:</strong> El funcionario audita cifras, normas y escalas.</li>
+            <li><strong>Aprobar:</strong> Se valida con la firma y el criterio local.</li>
+          </ol>
+        </div>
+
+        <div class="callout warning" style="margin: 0;">
+          <strong>2. Puntos de Chequeo Obligatorios</strong>
+          <ul style="margin-left: 1.2rem; margin-top: 0.5rem; font-size: 0.88rem;">
+            <li><strong>Planos:</strong> Revisar escala gráfica, norte y nombres oficiales de calles.</li>
+            <li><strong>Normativa:</strong> Confirmar que no traslape zonas federales ni de riesgo.</li>
+            <li><strong>Cifras:</strong> Checar que sumas y superficies coincidan con el catastro.</li>
+          </ul>
+        </div>
+
+        <div class="callout info" style="margin: 0;">
+          <strong>3. Transparencia ante el Cabildo</strong>
+          <p style="margin-top: 0.5rem; font-size: 0.88rem;">
+            Incluye siempre una leyenda de transparencia técnica:
+            <br><em>"Insumo de apoyo técnico elaborado con asistencia de Inteligencia Artificial y validado por la Dirección Municipal de Planeación."</em>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Módulo 5: Tarea para la Siguiente Sesión -->
+    <section id="tarea" class="module-card">
+      <div class="module-header">
+        <div class="module-number">📝</div>
+        <div class="module-title">
+          <h3>Tarea: Ficha de Priorización Municipal #1</h3>
+          <p>Entregable autónomo de 1 página para la siguiente sesión.</p>
+        </div>
+      </div>
+
+      <p>Para poner en práctica lo visto hoy, cada participante completará esta ficha conectando las técnicas de IA con un desafío urgente de su municipio. Puedes imprimir este formato directamente o llenarlo en tu procesador de textos para entregarlo al facilitador.</p>
+
+      <div class="btn-group no-print" style="margin-bottom: 1.5rem;">
+        <button onclick="window.print()" class="btn btn-accent">🖨️ Imprimir Ficha / Guardar como PDF</button>
+      </div>
+
+      <!-- Ficha Imprimible -->
+      <div class="task-container task-printable">
+        <div style="text-align: center; margin-bottom: 1.5rem; border-bottom: 2px solid var(--slate-800); padding-bottom: 0.75rem;">
+          <h2 style="font-size: 1.25rem; font-weight: 800; text-transform: uppercase; color: var(--slate-900);">Ficha de Priorización Municipal #1</h2>
+          <p style="font-size: 0.85rem; color: var(--slate-600);">Curso: Inteligencia Artificial Generativa para el Análisis Territorial • Guanajuato</p>
+        </div>
+
+        <div class="task-meta-grid">
+          <div class="task-field">
+            <label>Nombre del Participante</label>
+            <div class="line-input"></div>
+          </div>
+          <div class="task-field">
+            <label>Municipio de Guanajuato</label>
+            <div class="line-input"></div>
+          </div>
+          <div class="task-field">
+            <label>Cargo / Dependencia</label>
+            <div class="line-input"></div>
+          </div>
+        </div>
+
+        <div class="task-question">
+          <h4>1. Desafío Territorial Municipal Seleccionado:</h4>
+          <p>Escribe en 2 o 3 líneas un problema urbano o territorial real de tu municipio que requiera atención prioritaria (ej. falta de banquetas y arbolado en la periferia, necesidad de equipamiento recreativo, inundaciones recurrentes en colonias bajas, etc.):</p>
+          <div class="task-textarea-sim"></div>
+        </div>
+
+        <div class="task-question">
+          <h4>2. Conexión con los 3 Ejemplos de la Clase 1:</h4>
+          <p>De las 3 demostraciones presentadas en la sesión:</p>
+          <ul style="font-size: 0.85rem; margin-left: 1.25rem; margin-bottom: 0.75rem; color: var(--slate-700);">
+            <li><strong>Ejemplo 1:</strong> Visualización urbana antes/después (Calle Completa y rediseño del espacio público)</li>
+            <li><strong>Ejemplo 2:</strong> Asesor interactivo de proyectos de inversión municipal (Metodología PRESUME y Cadena de Valor)</li>
+            <li><strong>Ejemplo 3:</strong> Análisis y mapas espaciales en Google Colab con lenguaje natural (sin programar)</li>
+          </ul>
+          
+          <p><strong>a) ¿Cuál es la técnica que consideras MÁS URGENTE o ÚTIL para tu municipio?</strong></p>
+          <div class="task-textarea-sim" style="height: 45px; margin-bottom: 0.75rem;"></div>
+
+          <p><strong>b) ¿Por qué razón esa técnica en particular resolvería tu principal problema?</strong></p>
+          <div class="task-textarea-sim"></div>
+        </div>
+
+        <div class="task-question">
+          <h4>3. Producto Esperado al Finalizar el Curso:</h4>
+          <p>¿Qué resultado concreto te gustaría haber construido al terminar las sesiones? (ej. una visualización fotorrealista de mi calle principal para comités vecinales, una ficha de proyecto justificada para la cartera municipal, o un mapa temático de cobertura de servicios para el Cabildo):</p>
+          <div class="task-textarea-sim"></div>
+        </div>
+
+        <div style="font-size: 0.75rem; color: var(--slate-600); border-top: 1px solid var(--slate-200); padding-top: 0.5rem; text-align: right;">
+          Entregable individual • Fecha de entrega: Próxima sesión del curso
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer no-print">
+    <div class="footer-container">
+      <p><strong>Curso: Inteligencia Artificial Generativa para el Análisis Territorial</strong></p>
+      <p>Material elaborado por <strong>Ricardo Ochoa Sosa</strong> para la capacitación técnica de gobiernos municipales de Guanajuato.</p>
+      <p style="font-size: 0.8rem; color: #64748b;">Publicado mediante GitHub Pages • Repositorio: <code>curso-ia</code></p>
+    </div>
+  </footer>
+
+  <!-- Script para Copiar Prompts -->
+  <script>
+    function copyPrompt(elementId, buttonElement) {
+      const textToCopy = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = buttonElement.innerHTML;
+        buttonElement.innerHTML = "✅ ¡Copiado!";
+        buttonElement.classList.add("copied");
+        setTimeout(() => {
+          buttonElement.innerHTML = originalText;
+          buttonElement.classList.remove("copied");
+        }, 2200);
+      }).catch(err => {
+        console.error("Error al copiar texto: ", err);
+        alert("No se pudo copiar automáticamente. Por favor selecciona y copia el texto manualmente.");
+      });
+    }
+  </script>
+</body>
+</html>
